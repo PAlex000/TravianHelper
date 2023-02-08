@@ -1,9 +1,17 @@
+import re
 from tkinter import *
+from tkinter import messagebox
+from error_messages import *
 
 login_credentials = []
+# Regex for emails.
+regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b'
 
 
 def get_login_credentials(root, email, password):
+    if not re.fullmatch(regex, email.get()):
+        messagebox.showerror(INVALID_EMAIL_TITLE, INVALID_EMAIL_MSG)
+        return
     global login_credentials
     login_credentials = [email.get(), password.get()]
     root.destroy()
@@ -39,7 +47,7 @@ class EntryWithPlaceholder(Entry):
 def gui():
     root = Tk()
     root.geometry("600x400")
-
+    root.title("Login credentials")
     frame = Frame(root, bg="lightblue")
     frame.pack(fill="both", expand=True)
 

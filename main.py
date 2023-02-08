@@ -2,6 +2,8 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.edge.options import Options
 from gui import gui
+from tkinter import messagebox
+from error_messages import *
 
 
 # Login gets the email and password using GUI.
@@ -34,6 +36,9 @@ def login(driver, email, password):
 
 def main():
     login_credentials = gui()
+    if len(login_credentials) == 0:
+        messagebox.showerror(LOGIN_ERROR_TITLE, LOGIN_ERROR_MSG)
+        return
     options = Options()
     options.add_experimental_option('detach', True)
     driver = webdriver.Edge(options=options)
