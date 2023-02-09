@@ -1,41 +1,43 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.edge.options import Options
+from selenium.webdriver.support.wait import WebDriverWait
 from gui import gui
 from tkinter import messagebox
 from error_messages import *
-import time
+from selenium.webdriver.support import expected_conditions as EC
 
 
 # Login gets the email and password using GUI.
 # After the user pressed Login on GUI, the GUI automatically closes and the driver logs in.
 def login(driver, email, password):
-    # Accepting the cookies
+    wait = WebDriverWait(driver, 10)
+    # Accept the cookies
     driver.find_element(By.ID, "cmpbntyestxt").click()
-    # Clicking loginButton in the top-right corner to get the login iframe
+    # Click the loginButton in the top-right corner to get the login iframe
     driver.find_element(By.ID, "loginButton").click()
-    # wait.until(EC.frame_to_be_available_and_switch_to_it("easyXDM_default8613_provider"))
-    driver.implicitly_wait(5)
-    # Searching for the iframe which has "mellon-iframe" class attribute. Only 1 has it.
-    driver.switch_to.frame(driver.find_element(By.CLASS_NAME, "mellon-iframe"))
+    # Search for the iframe which has "mellon-iframe" class attribute. Only 1 has it.
+    wait.until(EC.frame_to_be_available_and_switch_to_it((By.CSS_SELECTOR, "iframe.mellon-iframe")))
 
-    # Searching for the first iframe after switching to the mellon-iframe iframe.
+    # Search for the first iframe after switching to the mellon-iframe iframe.
     driver.switch_to.frame(driver.find_element(By.TAG_NAME, "iframe"))
-    driver.implicitly_wait(2)
 
+    # Using element_to_be_clickable instead of implicit waiting.
+    wait.until(EC.element_to_be_clickable((By.NAME, "email")))
+    wait.until(EC.element_to_be_clickable((By.NAME, "password")))
     email_field = driver.find_element(By.NAME, "email")
     password_field = driver.find_element(By.NAME, "password")
 
-    # Setting the email and password from the GUI entries
+    # Set the email and password from the GUI entries
     email_field.send_keys(email)
     password_field.send_keys(password)
 
-    # Clicking the Log in button
-    driver.implicitly_wait(2)
-    driver.find_element(By.NAME, "submit").click()
-    time.sleep(3)
+    wait.until(EC.element_to_be_clickable((By.NAME, "submit"))).click()
+    # Need to wait for page to be loaded
+    wait.until(EC.presence_of_element_located((By.CLASS_NAME, 'container-fluid')))
+
     driver.get("https://lobby.kingdoms.com/")
-    # Checking if login was successful
+    # Check if login was successful
     if "logout" in driver.current_url:
         messagebox.showerror(FAILED_LOGIN_TITLE, FAILED_LOGIN_MSG)
         driver.quit()
