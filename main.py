@@ -34,15 +34,30 @@ def login(driver, email, password):
 
     wait.until(EC.element_to_be_clickable((By.NAME, "submit"))).click()
     # Need to wait for page to be loaded
-    wait.until(EC.presence_of_element_located((By.CLASS_NAME, 'container-fluid')))
 
-    driver.get("https://lobby.kingdoms.com/")
-    # Check if login was successful
-    if "logout" in driver.current_url:
+    try:
+        wait.until(EC.presence_of_element_located((By.CLASS_NAME, 'game-world')))
+    except:
         messagebox.showerror(FAILED_LOGIN_TITLE, FAILED_LOGIN_MSG)
         driver.quit()
         return -1
-
+    container_fluids = driver.find_elements(By.CLASS_NAME, "game-world")
+    # container_fluids = driver.find_elements(By.CSS_SELECTOR, "div.default-button")
+    container = dict()
+    # TODO:
+    # for element in container_fluids:
+    #     if element\
+    #             .find_element(By.CSS_SELECTOR, "div.default-button") \
+    #             .find_element(By.TAG_NAME, "span") \
+    #             .get_attribute('innerHTML') == "Continue playing":
+    #         print("Found an active world")
+    #         # element.find_element(By.CSS_SELECTOR, "div.default-button").get_attribute('innerHTML')) --> button
+    #         counter = True
+    #         if element.find_element(By.CLASS_NAME, "game-world-name").find_element(By.TAG_NAME, "span") and counter:
+    #             print(element.find_element(By.CLASS_NAME, "game-world-name").find_element(By.TAG_NAME, "span").get_attribute("innerHTML"))
+    #             counter = False
+    #         else:
+    #             print(element.find_element(By.CLASS_NAME, "game-world-name").get_attribute("innerHTML"))
 
 def main():
     login_credentials = gui()
