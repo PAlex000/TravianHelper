@@ -4,6 +4,7 @@ from selenium.webdriver.edge.options import Options
 from gui import gui
 from tkinter import messagebox
 from error_messages import *
+import time
 
 
 # Login gets the email and password using GUI.
@@ -32,6 +33,13 @@ def login(driver, email, password):
     # Clicking the Log in button
     driver.implicitly_wait(2)
     driver.find_element(By.NAME, "submit").click()
+    time.sleep(3)
+    driver.get("https://lobby.kingdoms.com/")
+    # Checking if login was successful
+    if "logout" in driver.current_url:
+        messagebox.showerror(FAILED_LOGIN_TITLE, FAILED_LOGIN_MSG)
+        driver.quit()
+        return -1
 
 
 def main():

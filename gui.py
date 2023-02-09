@@ -49,17 +49,19 @@ def gui():
     root.geometry("600x400")
     root.title("Login credentials")
     frame = Frame(root, bg="lightblue")
-    frame.pack(fill="both", expand=True)
+    frame.pack(fill="both", expand=TRUE)
 
-    Label(frame, text="Enter your login credentials:").pack(anchor=CENTER)
+    placing = {'ipadx': 20, 'ipady': 10, 'fill': X}
+
+    Label(frame, text="Enter your login credentials:").pack(**placing)
 
     email = EntryWithPlaceholder(frame, "Email address")
-    email.pack()
+    email.pack(**placing)
     password = EntryWithPlaceholder(frame, "Password")
     password.config(show="*")
-    password.pack()
+    password.pack(**placing)
 
-    Button(frame, text="Login", command=lambda: get_login_credentials(root, email, password)).pack()
+    Button(frame, text="Login", command=lambda: get_login_credentials(root, email, password)).pack(**placing)
     root.mainloop()
 
     return login_credentials
