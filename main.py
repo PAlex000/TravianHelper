@@ -72,6 +72,8 @@ def server_chooser(driver):
                 world_name = world_name.split("-")[1].lstrip()
                 container[world_name] = clickable_button
 
+    chosen_server = server_gui(container)
+    # TODO: Click the correct Continue playing button what user have chosen
 
 def main():
     login_credentials = login_gui()
@@ -85,7 +87,6 @@ def main():
     # login_credentials[0] is email, login_credentials[1] is password
     login(driver, login_credentials[0], login_credentials[1])
     server_chooser(driver)
-    # server_gui(container)
 
 
 if __name__ == '__main__':
