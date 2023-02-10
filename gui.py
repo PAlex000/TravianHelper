@@ -17,6 +17,11 @@ def get_login_credentials(root, email, password):
     root.destroy()
 
 
+def get_server(server):
+    print("SERVER: " + server)
+    pass
+
+
 class EntryWithPlaceholder(Entry):
     def __init__(self, master=None, placeholder="PLACEHOLDER", color='grey'):
         super().__init__(master)
@@ -44,7 +49,7 @@ class EntryWithPlaceholder(Entry):
             self.put_placeholder()
 
 
-def gui():
+def login_gui():
     root = Tk()
     root.geometry("600x400")
     root.title("Login credentials")
@@ -65,3 +70,21 @@ def gui():
     root.mainloop()
 
     return login_credentials
+
+
+# GUI for server choosing. It only contains checkboxes and a submit button, checkboxes are the server names.
+def server_gui(container):
+    root = Tk()
+    root.geometry("600x400")
+    root.title("Server choosing")
+    frame = Frame(root, bg="lightblue")
+    frame.pack(fill="both", expand=TRUE)
+
+    placing = {'ipadx': 20, 'ipady': 10, 'fill': X}
+    Label(frame, text="Please choose which server you want to login: ")
+    #TODO Make radiobuttons unique, and make them to return the correct button.
+    for key, value in container.items():
+        print("Well yea: " + key)
+        Radiobutton(frame, text=key, variable=key).pack(**placing)
+    Button(frame, text="Choose", command=lambda: get_server(key)).pack(**placing)
+    root.mainloop()

@@ -2,10 +2,16 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.edge.options import Options
 from selenium.webdriver.support.wait import WebDriverWait
-from gui import gui
+from gui import *
 from tkinter import messagebox
 from error_messages import *
 from selenium.webdriver.support import expected_conditions as EC
+
+# It's for checking if the selected world is first or not
+current_world = True
+
+# A dict which has "server_name" : "its button reference" key-values
+container = dict()
 
 
 # Login gets the email and password using GUI.
@@ -20,7 +26,7 @@ def login(driver, email, password):
     wait.until(EC.frame_to_be_available_and_switch_to_it((By.CSS_SELECTOR, "iframe.mellon-iframe")))
 
     # Search for the first iframe after switching to the mellon-iframe iframe.
-    driver.switch_to.frame(driver.find_element(By.TAG_NAME, "iframe"))
+    wait.until(EC.frame_to_be_available_and_switch_to_it((By.TAG_NAME, "iframe")))
 
     # Using element_to_be_clickable instead of implicit waiting.
     wait.until(EC.element_to_be_clickable((By.NAME, "email")))
@@ -34,33 +40,41 @@ def login(driver, email, password):
 
     wait.until(EC.element_to_be_clickable((By.NAME, "submit"))).click()
     # Need to wait for page to be loaded
-
     try:
         wait.until(EC.presence_of_element_located((By.CLASS_NAME, 'game-world')))
     except:
         messagebox.showerror(FAILED_LOGIN_TITLE, FAILED_LOGIN_MSG)
         driver.quit()
         return -1
+
+
+def server_chooser(driver):
     container_fluids = driver.find_elements(By.CLASS_NAME, "game-world")
-    # container_fluids = driver.find_elements(By.CSS_SELECTOR, "div.default-button")
-    container = dict()
-    # TODO:
-    # for element in container_fluids:
-    #     if element\
-    #             .find_element(By.CSS_SELECTOR, "div.default-button") \
-    #             .find_element(By.TAG_NAME, "span") \
-    #             .get_attribute('innerHTML') == "Continue playing":
-    #         print("Found an active world")
-    #         # element.find_element(By.CSS_SELECTOR, "div.default-button").get_attribute('innerHTML')) --> button
-    #         counter = True
-    #         if element.find_element(By.CLASS_NAME, "game-world-name").find_element(By.TAG_NAME, "span") and counter:
-    #             print(element.find_element(By.CLASS_NAME, "game-world-name").find_element(By.TAG_NAME, "span").get_attribute("innerHTML"))
-    #             counter = False
-    #         else:
-    #             print(element.find_element(By.CLASS_NAME, "game-world-name").get_attribute("innerHTML"))
+    # TODO: Think a better way to get servers name.
+    for element in container_fluids:
+        if element\
+                .find_element(By.CSS_SELECTOR, "div.default-button") \
+                .find_element(By.TAG_NAME, "span") \
+                .get_attribute('innerHTML') == "Continue playing":
+            clickable_button = element.find_element(By.CSS_SELECTOR, "div.default-button").get_attribute('innerHTML')
+            if len(container_fluids) > 1:
+                global current_world
+                if current_world:
+                    world_name = element.find_element(By.CLASS_NAME, "game-world-name").find_element(By.TAG_NAME, "span").get_attribute("innerHTML")
+                    world_name = world_name.split("-")[1].lstrip()
+                    current_world = False
+                    container[world_name] = clickable_button
+                else:
+                    world_name = element.find_element(By.CLASS_NAME, "game-world-name").get_attribute("innerHTML")
+                    container[world_name] = clickable_button
+            else:
+                world_name = element.find_element(By.CLASS_NAME, "game-world-name").find_element(By.TAG_NAME, "span").get_attribute("innerHTML")
+                world_name = world_name.split("-")[1].lstrip()
+                container[world_name] = clickable_button
+
 
 def main():
-    login_credentials = gui()
+    login_credentials = login_gui()
     if len(login_credentials) == 0:
         messagebox.showerror(LOGIN_ERROR_TITLE, LOGIN_ERROR_MSG)
         return
@@ -70,6 +84,8 @@ def main():
     driver.get("https://www.kingdoms.com/")
     # login_credentials[0] is email, login_credentials[1] is password
     login(driver, login_credentials[0], login_credentials[1])
+    server_chooser(driver)
+    # server_gui(container)
 
 
 if __name__ == '__main__':
