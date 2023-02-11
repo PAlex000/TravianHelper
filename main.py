@@ -63,17 +63,27 @@ def server_chooser(driver):
                     world_name = element.find_element(By.CLASS_NAME, "game-world-name").find_element(By.TAG_NAME, "span").get_attribute("innerHTML")
                     world_name = world_name.split("-")[1].lstrip()
                     current_world = False
-                    container[world_name] = clickable_button
+                    container["CRT-" + world_name] = element
                 else:
                     world_name = element.find_element(By.CLASS_NAME, "game-world-name").get_attribute("innerHTML")
-                    container[world_name] = clickable_button
+                    container["OTH-" + world_name] = element
             else:
                 world_name = element.find_element(By.CLASS_NAME, "game-world-name").find_element(By.TAG_NAME, "span").get_attribute("innerHTML")
                 world_name = world_name.split("-")[1].lstrip()
-                container[world_name] = clickable_button
+                container["CRT-" + world_name] = element
 
     chosen_server = server_gui(container)
-    # TODO: Click the correct Continue playing button what user have chosen
+    chosen_server_name = list(chosen_server.keys())[0]
+    chosen_server_value = list(chosen_server.values())[0]
+    # CRT stands for current, and OTH stands for others.
+    # CRT is the current_world displayed in the lobby screen, OTH is other active servers
+    # TODO: In the OTH section it needs to be checked which server you want to log into.
+    #  It only appears if you have more than 2 servers active
+    if "CRT-" in chosen_server_name:
+        chosen_server_value.find_element(By.CSS_SELECTOR, "div.default-button").click()
+    elif "OTH-" in chosen_server_name:
+        chosen_server_value.find_element(By.CSS_SELECTOR, "div.default-button").click()
+
 
 def main():
     login_credentials = login_gui()
