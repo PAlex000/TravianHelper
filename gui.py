@@ -4,9 +4,9 @@ from tkinter import messagebox
 from error_messages import *
 
 login_credentials = []
-server = dict()
 # Regex for emails.
 regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b'
+server = []
 
 
 def get_login_credentials(root, email, password):
@@ -81,6 +81,7 @@ def server_gui(container):
     var = IntVar()
     var.set(1)
     for key, value in container.items():
+        # RadioButton are different if their values are different. so I give them var.get(which I increase by 1)
         Radiobutton(frame, text=key, variable=var, value=var.get()).pack(**placing)
         var.set(var.get() + 1)
     Button(frame, text="Choose", command=lambda: get_values(container, var, root)).pack(**placing)
@@ -89,9 +90,10 @@ def server_gui(container):
     return server
 
 
+# Get the server name and server element from the container, and give it to the server variable
 def get_values(container, var, root):
-    list_value = list(container.values())[var.get() - 1]
-    list_keys = list(container.keys())[var.get() - 1]
+    server_name = list(container.keys())[var.get() - 1]
+    server_element = list(container.values())[var.get() - 1]
     global server
-    server[list_keys] = list_value
+    server = [server_name, server_element]
     root.destroy()

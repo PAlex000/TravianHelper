@@ -49,6 +49,8 @@ def login(driver, email, password):
 
 
 def server_chooser(driver):
+    wait = WebDriverWait(driver, 10)
+    wait.until(EC.element_to_be_clickable((By.CLASS_NAME, "game-world")))
     container_fluids = driver.find_elements(By.CLASS_NAME, "game-world")
     # TODO: Think a better way to get servers name.
     for element in container_fluids:
@@ -56,33 +58,26 @@ def server_chooser(driver):
                 .find_element(By.CSS_SELECTOR, "div.default-button") \
                 .find_element(By.TAG_NAME, "span") \
                 .get_attribute('innerHTML') == "Continue playing":
-            clickable_button = element.find_element(By.CSS_SELECTOR, "div.default-button").get_attribute('innerHTML')
             if len(container_fluids) > 1:
                 global current_world
                 if current_world:
                     world_name = element.find_element(By.CLASS_NAME, "game-world-name").find_element(By.TAG_NAME, "span").get_attribute("innerHTML")
                     world_name = world_name.split("-")[1].lstrip()
                     current_world = False
-                    container["CRT-" + world_name] = element
+                    container[world_name] = element
                 else:
                     world_name = element.find_element(By.CLASS_NAME, "game-world-name").get_attribute("innerHTML")
-                    container["OTH-" + world_name] = element
+                    container[world_name] = element
             else:
                 world_name = element.find_element(By.CLASS_NAME, "game-world-name").find_element(By.TAG_NAME, "span").get_attribute("innerHTML")
                 world_name = world_name.split("-")[1].lstrip()
-                container["CRT-" + world_name] = element
+                container[world_name] = element
 
+    # server_gui returns server_name and server_element (chosen_server[0] and [1]
     chosen_server = server_gui(container)
-    chosen_server_name = list(chosen_server.keys())[0]
-    chosen_server_value = list(chosen_server.values())[0]
-    # CRT stands for current, and OTH stands for others.
-    # CRT is the current_world displayed in the lobby screen, OTH is other active servers
-    # TODO: In the OTH section it needs to be checked which server you want to log into.
-    #  It only appears if you have more than 2 servers active
-    if "CRT-" in chosen_server_name:
-        chosen_server_value.find_element(By.CSS_SELECTOR, "div.default-button").click()
-    elif "OTH-" in chosen_server_name:
-        chosen_server_value.find_element(By.CSS_SELECTOR, "div.default-button").click()
+
+    # Clicks the correct login button
+    chosen_server[1].find_element(By.CSS_SELECTOR, "div.default-button").click()
 
 
 def main():
