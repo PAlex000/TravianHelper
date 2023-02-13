@@ -1,17 +1,31 @@
-# TravianHelper
-This is a hobby project. My plan is to make a travian helper, which helps users such as building and training.
+## <div align="center">TravianHelper </div>
 
-For now it is only runnable on Microsoft Edge.
-Required packages:
+```
+It iss for the browser game, Travian Kingdoms.
 
-python3 and selenium
+What the program does?
 
-How to run (on Linux):
+- It builds for you
+- It recruits for you
+- It alerts you if you are under attack
+- It sends farmlist for you
 
-`cd project_folder`
+I am trying to improve python and webscraping, so I decided to write it in python.
+```
 
-`python3 main.py`
+### Requirements:
 
-After this, you should be able to see a GUI which asks for login_credentials for travian kingdoms.
+ - Python
+ - Python libraries: `tkinter` `selenium`
+ - Microsoft Edge browser
+
+### How to run:
+
+```
+python main.py
+
+Tested on Lubuntu and Windows 10
+```
+
 
 ### There are lots of functions not implemented yet, it's still in WIP.
