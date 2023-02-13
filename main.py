@@ -52,6 +52,7 @@ def server_chooser(driver):
     wait = WebDriverWait(driver, 10)
     wait.until(EC.element_to_be_clickable((By.CLASS_NAME, "game-world")))
     container_fluids = driver.find_elements(By.CLASS_NAME, "game-world")
+    wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, "div.default-button")))
     # TODO: Think a better way to get servers name.
     for element in container_fluids:
         if element\
