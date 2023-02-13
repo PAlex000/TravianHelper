@@ -1,7 +1,7 @@
 ## <div align="center">TravianHelper </div>
 
 ```
-It iss for the browser game, Travian Kingdoms.
+It is for the browser game, Travian Kingdoms.
 
 What the program does?
 
@@ -28,4 +28,4 @@ Tested on Lubuntu and Windows 10
 ```
 
 
-### There are lots of functions not implemented yet, it's still in WIP.
+### There are lots of function not implemented yet, it's still in WIP.
