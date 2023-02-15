@@ -6,6 +6,7 @@ from gui.login_gui import *
 from tkinter import messagebox
 from messages.error_messages import *
 from selenium.webdriver.support import expected_conditions as EC
+from gui.login_gui import Login
 
 class App:
 
@@ -22,18 +23,18 @@ class App:
 
     def __get_login_credentials(self):
         # login_credentials[0] is email, login_credentials[1] is password
-        login_credentials = login_gui()
+        login_variable = Login("Login credentials", Tk())
+        login_credentials = login_variable.login_gui()
         if len(login_credentials) == 0:
             messagebox.showerror(LOGIN_ERROR_TITLE, LOGIN_ERROR_MSG)
             return
         self.__email = login_credentials[0]
         self.__password = login_credentials[1]
         
-
-    # Login gets the email and password using GUI.
-    # After the user pressed Login on GUI, the GUI automatically closes and the driver logs in.
-    def __page_load_and_click_buttons(self):
+    def __pageload(self):
         self.__driver.get("https://www.kingdoms.com/")
+
+    def __click_buttons(self):
         self.__wait.until(EC.element_to_be_clickable((By.ID, "cmpbntyestxt"))).click()
         self.__wait.until(EC.element_to_be_clickable((By.ID, "loginButton"))).click()
 
@@ -62,7 +63,8 @@ class App:
 
     def login(self):
         self.__get_login_credentials()
-        self.__page_load_and_click_buttons()
+        self.__pageload()
+        self.__click_buttons()
         self.__iframes_switching()
         self.__get_login_fields()
         self.__set_login_fields(self.__email, self.__password)
@@ -93,14 +95,17 @@ class App:
                     world_name = world_name.split("-")[1].lstrip()
                     self.__container[world_name] = element
             
-    def __get_and_login_to_the_selected_world(self):
+    def __set_selected_world(self):
         # server_gui returns server_name and server_element (self.__selected_world[0] and [1]
-        self.__selected_world = server_gui(self.__container)
+        self.__selected_world = Login.server_gui(self.__container)
+
+    def __login_to_the_selected_world(self):
         self.__wait.until(EC.element_to_be_clickable((self.__selected_world[1].find_element(By.CSS_SELECTOR, "div.default-button")))).click()
 
     def server_chooser(self):
         self.__get_all_active_worlds()
-        self.__get_and_login_to_the_selected_world()
+        self.__set_selected_world()
+        self.__login_to_the_selected_world()
 
 
 def main():
