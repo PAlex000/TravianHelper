@@ -1,13 +1,13 @@
 import re
 from tkinter import *
 from tkinter import messagebox
-from error_messages import *
+from messages.error_messages import *
+
 
 login_credentials = []
 # Regex for emails.
 regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b'
 server = []
-
 
 def get_login_credentials(root, email, password):
     if not re.fullmatch(regex, email.get()):
