@@ -4,20 +4,6 @@ from tkinter import messagebox
 from messages.error_messages import *
 
 
-login_credentials = []
-# Regex for emails.
-regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b'
-server = []
-
-def get_login_credentials(root, email, password):
-    if not re.fullmatch(regex, email.get()):
-        messagebox.showerror(INVALID_EMAIL_TITLE, INVALID_EMAIL_MSG)
-        return
-    global login_credentials
-    login_credentials = [email.get(), password.get()]
-    root.destroy()
-
-
 class EntryWithPlaceholder(Entry):
     def __init__(self, master=None, placeholder="PLACEHOLDER", color='grey'):
         super().__init__(master)
@@ -44,29 +30,44 @@ class EntryWithPlaceholder(Entry):
         if not self.get():
             self.put_placeholder()
 
+class Login():
 
-def login_gui():
-    root = Tk()
-    root.geometry("600x400")
-    root.title("Login credentials")
-    frame = Frame(root, bg="lightblue")
-    frame.pack(fill="both", expand=TRUE)
+    regex_for_email = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b'
+    server = []
+    def __init__(self, title, window):
+        self.__window = window
+        self.__window.geometry("600x400")
+        self.__frame = Frame(self.__window, bg="lightblue")
+        self.__frame.pack(fill="both", expand=TRUE)
+        self.__placing = {'ipadx': 20, 'ipady': 10, 'fill': X}
+        self.__window.title(title)
 
-    placing = {'ipadx': 20, 'ipady': 10, 'fill': X}
+    def __email_check(self):
+        if not re.fullmatch(Login.regex_for_email, self.__email.get()):
+            messagebox.showerror(INVALID_EMAIL_TITLE, INVALID_EMAIL_MSG)
+            return
+        
+    def __get_login_credentials(self):
+        self.__email_check()
+        self.__lista = []
+        self.__lista.append(self.__email.get())
+        self.__lista.append(self.__password.get())
+        self.__window.destroy()
+    
+    def __set_entries(self):
+        Label(self.__window, text="Login credentials").pack(**self.__placing)
+        self.__email = EntryWithPlaceholder(self.__window, "Email address")
+        self.__email.pack(**self.__placing)
+        self.__password = EntryWithPlaceholder(self.__window, "Password")
+        self.__password.config(show="*")
+        self.__password.pack(**self.__placing)
+        Button(self.__window, text="Login", command=self.__get_login_credentials).pack(**self.__placing)
+        self.__window.mainloop()
 
-    Label(frame, text="Enter your login credentials:").pack(**placing)
-
-    email = EntryWithPlaceholder(frame, "Email address")
-    email.pack(**placing)
-    password = EntryWithPlaceholder(frame, "Password")
-    password.config(show="*")
-    password.pack(**placing)
-
-    Button(frame, text="Login", command=lambda: get_login_credentials(root, email, password)).pack(**placing)
-    root.mainloop()
-
-    return login_credentials
-
+    def login_gui(self):
+        self.__set_entries()
+        return self.__lista
+    
 
 # GUI for server choosing. It only contains checkboxes and a submit button, checkboxes are the server names.
 def server_gui(container):
