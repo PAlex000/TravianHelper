@@ -8,7 +8,6 @@ from messages.error_messages import *
 from selenium.webdriver.support import expected_conditions as EC
 from gui.login_gui import Login_page
 from gui.login_gui import Server_page
-from webscrape.infra_view import Infra_view
 
 class App:
 
@@ -79,6 +78,7 @@ class App:
         container_fluids = self.__driver.find_elements(By.CLASS_NAME, "game-world")
         # TODO: Think a better way to get server names.
         for element in container_fluids:
+            self.__wait.until(EC.element_to_be_clickable((element.find_element(By.CSS_SELECTOR, "div.default-button"))))
             if element\
                     .find_element(By.CSS_SELECTOR, "div.default-button") \
                     .find_element(By.TAG_NAME, "span") \
