@@ -9,7 +9,6 @@ from src.webscrape.infra_view import Infra_view
 import time
 from tkinter import messagebox
 
-
 class App:
 
     def __init__(self):
@@ -78,6 +77,7 @@ class App:
 
         container_fluids = self.__driver.find_elements(By.CLASS_NAME, "game-world")
         # TODO: Think a better way to get server names.
+        time.sleep(3)
         for element in container_fluids:
             self.__wait.until(EC.element_to_be_clickable((element.find_element(By.CSS_SELECTOR, "div.default-button"))))
             if element\
@@ -112,26 +112,6 @@ class App:
         self.__set_selected_world()
         self.__login_to_the_selected_world()
 
-
-    def __get_building_id(self):
-        self.__wait.until(EC.visibility_of_element_located((By.ID, "villageView")))
-        print("Getting building's id...")
-        self.__element = self.__driver.find_element(By.CLASS_NAME, "buildingLocation36").get_attribute('innerHTML')
-        start_index = self.__element.find("buildingId")
-        self.__building_id = "buildingId" + self.__element[start_index + 10] + self.__element[start_index + 11]
-        
-
-    def __get_building_name(self):
-        pass
-
-    def __get_location(self):
-        print("Getting building's location...")
-        start_index = self.__element.find("location_")
-        self.__location = "location" + self.__element[start_index + 9] + self.__element[start_index + 10]
-        
-    def get_main_view(self):
-        self.__get_building_id()
-        self.__get_location()
-        print(f"BuildingID: {self.__building_id} locationID: {self.__location}")
-        # self.__get_building_name()
-        # Main_view(building_name, location)
+    def get_infra_view(self):
+        infra_view = Infra_view(self.__driver)
+        infra_view.get_all_buildings()

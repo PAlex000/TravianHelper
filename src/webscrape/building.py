@@ -13,5 +13,8 @@ class Building():
         return self.__name
     
     @property
-    def name(self):
+    def buildingid(self):
         return self.__buildingid
+
+    def __str__ (self):
+        return f"Building(name = {self.name}, location = {self.location}, buildingid = {self.buildingid})"
