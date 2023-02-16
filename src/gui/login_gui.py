@@ -30,71 +30,81 @@ class EntryWithPlaceholder(Entry):
         if not self.get():
             self.put_placeholder()
 
-class Login():
+
+class Default_page(Tk):
+
+    def __init__(self, title):
+        super().__init__()
+        self.geometry("600x400")
+        self.__placing = {'ipadx': 20, 'ipady': 10, 'fill': X}
+        self.title(title)
+
+    @property
+    def placing(self):
+        return self.__placing
+
+
+class Login_page(Default_page):
 
     regex_for_email = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b'
-    server = []
-    def __init__(self, title, window):
-        self.__window = window
-        self.__window.geometry("600x400")
-        self.__frame = Frame(self.__window, bg="lightblue")
+
+    def __init__(self, title):
+        super().__init__(title)
+        self.__text = title
+        self.__credentials = []
+        self.__frame = Frame(self, bg="lightblue")
         self.__frame.pack(fill="both", expand=TRUE)
-        self.__placing = {'ipadx': 20, 'ipady': 10, 'fill': X}
-        self.__window.title(title)
 
     def __email_check(self):
-        if not re.fullmatch(Login.regex_for_email, self.__email.get()):
+        if not re.fullmatch(Login_page.regex_for_email, self.__email.get()):
             messagebox.showerror(INVALID_EMAIL_TITLE, INVALID_EMAIL_MSG)
             return
         
     def __get_login_credentials(self):
         self.__email_check()
-        self.__lista = []
-        self.__lista.append(self.__email.get())
-        self.__lista.append(self.__password.get())
-        self.__window.destroy()
+        self.__credentials.append(self.__email.get())
+        self.__credentials.append(self.__password.get())
+        self.destroy()
     
     def __set_entries(self):
-        Label(self.__window, text="Login credentials").pack(**self.__placing)
-        self.__email = EntryWithPlaceholder(self.__window, "Email address")
-        self.__email.pack(**self.__placing)
-        self.__password = EntryWithPlaceholder(self.__window, "Password")
+        Label(self.__frame, text=self.__text).pack(**self.placing)
+        self.__email = EntryWithPlaceholder(self.__frame, "Email address")
+        self.__email.pack(**self.placing)
+        self.__password = EntryWithPlaceholder(self.__frame, "Password")
         self.__password.config(show="*")
-        self.__password.pack(**self.__placing)
-        Button(self.__window, text="Login", command=self.__get_login_credentials).pack(**self.__placing)
-        self.__window.mainloop()
-
+        self.__password.pack(**self.placing)
+        Button(self.__frame, text="Login", command=self.__get_login_credentials).pack(**self.placing)
+        self.mainloop()
+        
     def login_gui(self):
         self.__set_entries()
-        return self.__lista
-    
-
-# GUI for server choosing. It only contains checkboxes and a submit button, checkboxes are the server names.
-def server_gui(container):
-    root = Tk()
-    root.geometry("600x400")
-    root.title("Server choosing")
-    frame = Frame(root, bg="lightblue")
-    frame.pack(fill="both", expand=TRUE)
-
-    placing = {'ipadx': 20, 'ipady': 10, 'fill': X}
-    Label(frame, text="Please choose which server you want to login: ")
-    var = IntVar()
-    var.set(1)
-    for key, value in container.items():
-        # RadioButton are different if their values are different. so I give them var.get(which I increase by 1)
-        Radiobutton(frame, text=key, variable=var, value=var.get()).pack(**placing)
-        var.set(var.get() + 1)
-    Button(frame, text="Choose", command=lambda: get_values(container, var, root)).pack(**placing)
-    var.set(1)
-    root.mainloop()
-    return server
+        return self.__credentials
 
 
-# Get the server name and server element from the container, and give it to the server variable
-def get_values(container, var, root):
-    server_name = list(container.keys())[var.get() - 1]
-    server_element = list(container.values())[var.get() - 1]
-    global server
-    server = [server_name, server_element]
-    root.destroy()
+class Server_page(Default_page):
+    def __init__(self, title, container):
+        super().__init__(title)
+        self.__container = container
+        self.__server_name = "Unknown_server_name"
+        self.__server_element = "Unknown_server_element"
+        self.__var = IntVar()
+        self.__frame = Frame(self, bg="lightblue")
+        self.__frame.pack(fill="both", expand=TRUE)
+
+    def server_gui(self):
+        Label(self.__frame, text="Please choose which server you want to login: ").pack(**self.placing)
+        self.__var.set(1)
+        for key, value in self.__container.items():
+            # RadioButton are different if their values are different. so I give them var.get(which I increase by 1)
+            Radiobutton(self.__frame, text=key, variable=self.__var, value=self.__var.get()).pack(**self.placing)
+            self.__var.set(self.__var.get() + 1)
+        Button(self.__frame, text="Choose", command=self.__get_server_details).pack(**self.placing)
+        self.__var.set(1)
+        self.mainloop()
+
+        return [self.__server_name, self.__server_element]
+
+    def __get_server_details(self):
+        self.__server_name = list(self.__container.keys())[self.__var.get() - 1]
+        self.__server_element = list(self.__container.values())[self.__var.get() - 1]
+        self.destroy()
