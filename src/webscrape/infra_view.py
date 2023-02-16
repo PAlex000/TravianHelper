@@ -1,4 +1,4 @@
-from building import Building
+from src.webscrape.building import Building
 
 # 21 field + 2 optional
 class Infra_view():

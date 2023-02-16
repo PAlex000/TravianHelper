@@ -1,13 +1,14 @@
-import time
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.edge.options import Options
-from selenium.webdriver.support.wait import WebDriverWait
-from tkinter import messagebox
-from messages.error_messages import *
 from selenium.webdriver.support import expected_conditions as EC
-from gui.login_gui import Login_page
-from gui.login_gui import Server_page
+from selenium.webdriver.support.wait import WebDriverWait
+from src.gui.login_gui import Login_page, Server_page
+from src.messages.error_messages import *
+from src.webscrape.infra_view import Infra_view
+import time
+from tkinter import messagebox
+
 
 class App:
 
