@@ -1,12 +1,13 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.edge.options import Options
-from selenium.webdriver.support.wait import WebDriverWait
-from tkinter import messagebox
-from messages.error_messages import *
 from selenium.webdriver.support import expected_conditions as EC
-from gui.login_gui import Login_page
-from gui.login_gui import Server_page
+from selenium.webdriver.support.wait import WebDriverWait
+from src.gui.login_gui import Login_page, Server_page
+from src.messages.error_messages import *
+from src.webscrape.infra_view import Infra_view
+import time
+from tkinter import messagebox
 
 class App:
 
@@ -71,11 +72,14 @@ class App:
         self.__login_checking()
 
     def __get_all_active_worlds(self):
+        self.__wait.until(EC.visibility_of_element_located((By.TAG_NAME, "body")))
         self.__wait.until(EC.visibility_of_element_located((By.CLASS_NAME, "game-world")))
 
         container_fluids = self.__driver.find_elements(By.CLASS_NAME, "game-world")
         # TODO: Think a better way to get server names.
+        time.sleep(3)
         for element in container_fluids:
+            self.__wait.until(EC.element_to_be_clickable((element.find_element(By.CSS_SELECTOR, "div.default-button"))))
             if element\
                     .find_element(By.CSS_SELECTOR, "div.default-button") \
                     .find_element(By.TAG_NAME, "span") \
@@ -100,9 +104,14 @@ class App:
 
     def __login_to_the_selected_world(self):
         self.__wait.until(EC.element_to_be_clickable((self.__selected_world[1].find_element(By.CSS_SELECTOR, "div.default-button")))).click()
+        # TODO: Try to fix this
+        time.sleep(5)
 
     def server_chooser(self):
         self.__get_all_active_worlds()
         self.__set_selected_world()
         self.__login_to_the_selected_world()
 
+    def get_infra_view(self):
+        infra_view = Infra_view(self.__driver)
+        infra_view.get_all_buildings()

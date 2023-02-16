@@ -1,7 +1,7 @@
 import re
 from tkinter import *
 from tkinter import messagebox
-from messages.error_messages import *
+from src.messages.error_messages import *
 
 
 class EntryWithPlaceholder(Entry):
