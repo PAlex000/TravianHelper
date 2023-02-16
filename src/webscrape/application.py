@@ -42,12 +42,12 @@ class App:
         self.__wait.until(EC.frame_to_be_available_and_switch_to_it((By.TAG_NAME, "iframe")))
 
     def __get_login_fields(self):
-        self.email_field = self.__wait.until(EC.visibility_of_element_located((By.NAME, "email")))
-        self.password_field = self.__wait.until(EC.visibility_of_element_located((By.NAME, "password")))
+        self.__email_field = self.__wait.until(EC.visibility_of_element_located((By.NAME, "email")))
+        self.__password_field = self.__wait.until(EC.visibility_of_element_located((By.NAME, "password")))
         
     def __set_login_fields(self, email, password):
-        self.email_field.send_keys(email)
-        self.password_field.send_keys(password)
+        self.__email_field.send_keys(email)
+        self.__password_field.send_keys(password)
 
     def __click_loginButton(self):
         self.__wait.until(EC.element_to_be_clickable((By.NAME, "submit"))).click()
@@ -95,7 +95,7 @@ class App:
                     self.__container[world_name] = element
             
     def __set_selected_world(self):
-        # server_gui returns server_name and server_element (self.__selected_world[0] and [1]
+        # server_gui returns server_name and server_element (self.__selected_world[0] and [1])
         self.__selected_world = Server_page("Server Page", self.__container).server_gui()
 
     def __login_to_the_selected_world(self):
