@@ -77,13 +77,10 @@ class App:
         self.__wait.until(EC.visibility_of_element_located((By.CLASS_NAME, "game-world")))
 
         container_fluids = self.__driver.find_elements(By.CLASS_NAME, "game-world")
-        # TODO: Think a better way to get server names.
-        time.sleep(5)
+        
         for element in container_fluids:
-            if element\
-                    .find_element(By.CSS_SELECTOR, "div.default-button") \
-                    .find_element(By.TAG_NAME, "span") \
-                    .get_attribute('innerHTML') == "Continue playing":
+            self.__driver.implicitly_wait(20)
+            if element.find_element(By.CSS_SELECTOR, "div.default-button").find_element(By.TAG_NAME, "span").get_attribute('innerHTML') == "Continue playing":
                 if len(container_fluids) > 1:
                     if self.__first_world:
                         world_name = element.find_element(By.CLASS_NAME, "game-world-name").find_element(By.TAG_NAME, "span").get_attribute("innerHTML")
