@@ -1,4 +1,4 @@
-from webscrape.application import App
+from src.webscrape.application import App
 
 def main():
     travian_helper = App()
