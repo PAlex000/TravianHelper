@@ -6,6 +6,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 from src.gui.login_gui import Login_page, Server_page
 from src.messages.error_messages import *
 from src.webscrape.infra_view import Infra_view
+from src.webscrape.field_view import Field_view
 import time
 from tkinter import messagebox
 
@@ -77,9 +78,8 @@ class App:
 
         container_fluids = self.__driver.find_elements(By.CLASS_NAME, "game-world")
         # TODO: Think a better way to get server names.
-        time.sleep(3)
+        time.sleep(5)
         for element in container_fluids:
-            self.__wait.until(EC.element_to_be_clickable((element.find_element(By.CSS_SELECTOR, "div.default-button"))))
             if element\
                     .find_element(By.CSS_SELECTOR, "div.default-button") \
                     .find_element(By.TAG_NAME, "span") \
@@ -115,3 +115,9 @@ class App:
     def get_infra_view(self):
         infra_view = Infra_view(self.__driver)
         infra_view.get_all_buildings()
+        # print(f"{infra_view}")
+
+    def get_field_view(self):
+        field_view = Field_view(self.__driver)
+        field_view.get_all_buildings()
+        # print(f"{field_view}")

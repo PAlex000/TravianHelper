@@ -1,14 +1,23 @@
-# 21 field + 2 optional
-class Field_view():
-    def __init__(self):
-        self.__fields = []
-        # Starts from 0
-        i = 1
-        while i < 21:
-            my_dict = {"Name" : i, "Location" : 2}
-            self.__fields.append(my_dict)
-            i += 1
+import time
+from src.webscrape.building import Field_building
+from src.webscrape.general_view import General_view
+from selenium.webdriver.support import expected_conditions as EC
 
-    @property
-    def fields(self):
-        return self.__fields
+# 21 field + 2 optional
+class Field_view(General_view):
+    def __init__(self, driver):
+        super().__init__(driver)
+
+    # Resource starts from 1 until 18
+    def get_all_buildings(self):
+        self._get_to_specific_view("navi_resources")
+        time.sleep(5)
+        for building_location in range(1,19):
+            self._get_main_view(building_location, "villageViewRes")
+            self._field_setter(self._building_id, self._location , self._building_name, Field_building, level = self._building_level)
+
+    def __str__(self):
+        temp = ""
+        for i in self._fields:
+            temp += str(i) + "\n"
+        return temp
