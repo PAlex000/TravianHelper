@@ -64,6 +64,7 @@ class Login_page(Default_page):
         self.__email_check()
         self.__credentials.append(self.__email.get())
         self.__credentials.append(self.__password.get())
+        self.__credentials.append(self.__remember_var.get())
         self.destroy()
     
     def __set_entries(self):
@@ -73,6 +74,8 @@ class Login_page(Default_page):
         self.__password = EntryWithPlaceholder(self.__frame, "Password")
         self.__password.config(show="*")
         self.__password.pack(**self.placing)
+        self.__remember_var = IntVar()
+        Checkbutton(self.__frame, text='Remember email',variable=self.__remember_var, onvalue=1, offvalue=0).pack(**self.placing)
         Button(self.__frame, text="Login", command=self.__get_login_credentials).pack(**self.placing)
         self.mainloop()
         
