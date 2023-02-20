@@ -2,6 +2,7 @@ import re
 from tkinter import *
 from tkinter import messagebox
 from src.messages.error_messages import *
+from src.gui.loginAttempt import LoginAttempt
 
 class EntryWithPlaceholder(Entry):
     def __init__(self, master=None, placeholder="PLACEHOLDER", color='grey'):
@@ -43,8 +44,6 @@ class DefaultPage(Tk):
 
 class LoginPage(DefaultPage):
 
-    regexForEmail = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b'
-
     def __init__(self, title):
         super().__init__(title)
         self.__email = ""
@@ -57,26 +56,22 @@ class LoginPage(DefaultPage):
         return [self.__email, self.__password, self.__emailRememberButton]
 
     def __setEntries(self):
-        self.__emailEntry = EntryWithPlaceholder(self.__frame, "Email address")
+        self.__emailEntry = EntryWithPlaceholder(self.__frame, "Email")
         self.__emailEntry.pack(**self.properties)
-        self.__passwordEntry = EntryWithPlaceholder(self.__frame, "Password")
+        self.__passwordEntry = EntryWithPlaceholder(self.__frame, "")
         self.__passwordEntry.config(show="*")
         self.__passwordEntry.pack(**self.properties)
         self.__emailRememberButton = IntVar()
         Checkbutton(self.__frame, text='Remember email', variable=self.__emailRememberButton, onvalue=1, offvalue=0).pack(**self.properties)
-        Button(self.__frame, text="Login", command=self.__getLoginCredentials).pack(**self.properties)
+        Button(self.__frame, text="Login", command=self.__LoginAttempt).pack(**self.properties)
         self.mainloop()
 
-    def __getLoginCredentials(self):
-        self.__emailCheck()
-        self.__email = self.__emailEntry.get()
-        self.__password = self.__passwordEntry.get()
+    def __LoginAttempt(self):
+        attempt = LoginAttempt(self.__emailEntry.get(), self.__passwordEntry.get())
+        loginCredentials = attempt.getStatus()
+        self.__email = loginCredentials[0]
+        self.__password = loginCredentials[1]
         self.destroy()
-
-    def __emailCheck(self):
-        if not re.fullmatch(LoginPage.regexForEmail, self.__emailEntry.get()):
-            messagebox.showerror(INVALID_EMAIL_TITLE, INVALID_EMAIL_MSG)
-            return
 
 class ServerPage(DefaultPage):
     def __init__(self, title, serverElements):
