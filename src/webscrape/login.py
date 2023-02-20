@@ -1,6 +1,6 @@
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
-from src.gui.login_gui import Login_page
+from src.gui.login_gui import LoginPage
 from src.messages.error_messages import *
 from tkinter import messagebox
 
@@ -14,7 +14,7 @@ class Login():
 
     def __get_login_credentials(self):
         # login_credentials[0] is email, login_credentials[1] is password, login_credentials[2] if user wants to save email for later
-        login_credentials = Login_page("Login credentials").login_gui()
+        login_credentials = LoginPage("Login credentials").loginGui()
         if len(login_credentials) == 0:
             messagebox.showerror(LOGIN_ERROR_TITLE, LOGIN_ERROR_MSG)
             return

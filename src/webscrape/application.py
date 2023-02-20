@@ -3,7 +3,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.edge.options import Options
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
-from src.gui.login_gui import Server_page
+from src.gui.login_gui import ServerPage
 from src.messages.error_messages import *
 from src.webscrape.infra_view import Infra_view
 from src.webscrape.field_view import Field_view
@@ -51,7 +51,7 @@ class App:
             
     def __set_selected_world(self):
         # server_gui returns server_name and server_element (self.__selected_world[0] and [1])
-        self.__selected_world = Server_page("Server Page", self.__container).server_gui()
+        self.__selected_world = ServerPage("Server Page", self.__container).serverGui()
 
     def __login_to_the_selected_world(self):
         self.__wait.until(EC.element_to_be_clickable((self.__selected_world[1].find_element(By.CSS_SELECTOR, "div.default-button")))).click()
