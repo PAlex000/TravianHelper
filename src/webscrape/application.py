@@ -3,10 +3,11 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.edge.options import Options
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
-from src.gui.login_gui import ServerPage
+from src.gui.pages.serverPage import ServerPage
 from src.messages.error_messages import *
 from src.webscrape.infra_view import Infra_view
 from src.webscrape.field_view import Field_view
+from src.gui.pages.loginPage import LoginPage
 from src.webscrape.login import Login
 import time
 
@@ -24,7 +25,8 @@ class App:
         self.__first_world = True
 
     def login(self):
-        Login(self.__driver, self.__wait).login()
+        loginCreds = LoginPage().createLoginPage()
+        Login().login(loginCreds[0], loginCreds[1], self.__driver)
     
     def __get_all_active_worlds(self):
         self.__wait.until(EC.visibility_of_element_located((By.TAG_NAME, "body")))
