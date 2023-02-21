@@ -1,30 +1,47 @@
 from tkinter import *
 from src.gui.pages.defaultPage import DefaultPage
+from src.gui.serverChooseAttempt import ServerChooseAttempt
 
 class ServerPage(DefaultPage):
-    def __init__(self, title, serverElements):
+
+    def __init__(self, serverElements, title = "Server Page"):
         super().__init__(title)
         self.__serverElements = serverElements
-        self.__serverName = "Unknown serverNname"
-        self.__serverElement = "Unknown serverElement"
-        self.__count = IntVar()
-        self.__frame = Frame(self, bg="lightblue")
-        self.__frame.pack(fill="both", expand=TRUE)
+        self.__serverDetails = []
 
-    def serverGui(self):
-        Label(self.__frame, text="Please choose which server you want to login: ").pack(**self.properties)
-        self.__count.set(1)
-        for key, value in self.__serverElements.items():
-            # RadioButton are different if their values are different. so I give them var.get(which I increase by 1)
-            Radiobutton(self.__frame, text=key, variable=self.__count, value=self.__count.get()).pack(**self.properties)
-            self.__count.set(self.__count.get() + 1)
-        Button(self.__frame, text="Choose", command=self.__getServerDetails).pack(**self.properties)
-        self.__count.set(1)
+    @property
+    def serverDetails(self):
+        return self.__serverDetails
+
+    def createServerPage(self):
+        self.__createLabel()
+        self.__createButtons()
         self.mainloop()
 
-        return [self.__serverName, self.__serverElement]
+    def __createLabel(self):
+        Label(self.frame, text="Please choose which server you want to login: ").pack(**self.properties)
 
-    def __getServerDetails(self):
-        self.__serverName = list(self.__serverElements.keys())[self.__count.get() - 1]
-        self.__serverElement = list(self.__serverElements.values())[self.__count.get() - 1]
+    def __createButtons(self):
+        self.__getServerNames()
+        self.__serverCount = IntVar()
+        for serverName in self.__serverNames:
+            Radiobutton(self.frame, text=serverName, variable=self.__serverCount, value=self.__serverCount.get()).pack(**self.properties)
+            self.__serverCount.set(self.__serverCount.get() + 1)
+        Button(self.frame, text="Choose", command=self.__serverChooseAndDestroyServerPage).pack(**self.properties)
+        # Make the first element default
+        self.__serverCount.set(0)
+
+    def __getServerNames(self):
+        self.__serverNames = []
+        for serverName in self.__serverElements.keys():
+            self.__serverNames.append(serverName)
+
+    def __serverChooseAndDestroyServerPage(self):
+        selectedServerName = list(self.__serverElements.keys())[self.__serverCount.get()]
+        selectedServerElement = list(self.__serverElements.values())[self.__serverCount.get()]
+        attempt = ServerChooseAttempt(selectedServerName, selectedServerElement)
+        self.__serverDetails = attempt.getStatus()
+        self.__destroyServerPage()
+
+    def __destroyServerPage(self):
         self.destroy()

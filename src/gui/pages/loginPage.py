@@ -15,27 +15,22 @@ class LoginPage(DefaultPage):
         return self.__loginCredentials
     
     def createLoginPage(self):
-        self.__createFrame()
         self.__createEntries()
         self.__createButtons()
         self.mainloop()
 
-    def __createFrame(self):
-        self.__frame = Frame(self, bg="lightblue")
-        self.__frame.pack(fill="both", expand=TRUE)
-
     def __createEntries(self):
-        self.__emailEntry = Entry(self.__frame)
+        self.__emailEntry = Entry(self.frame)
         self.__emailEntry.insert(0, 'Email')
         self.__emailEntry.pack(**self.properties)
-        self.__passwordEntry = Entry(self.__frame)
+        self.__passwordEntry = Entry(self.frame)
         self.__passwordEntry.config(show="*")
         self.__passwordEntry.pack(**self.properties)
     
     def __createButtons(self):
-        self.__checkbtn = Checkbutton(self.__frame, text='Remember email', variable=self.__emailRememberButton, onvalue=1, offvalue=0)
+        self.__checkbtn = Checkbutton(self.frame, text='Remember email', variable=self.__emailRememberButton, onvalue=1, offvalue=0)
         self.__checkbtn.pack(**self.properties)
-        Button(self.__frame, text="Login",
+        Button(self.frame, text="Login",
                command=self.__loginAndDestroyLoginPage).pack(**self.properties)
         
     def __loginAndDestroyLoginPage(self):
