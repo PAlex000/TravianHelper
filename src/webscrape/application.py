@@ -25,7 +25,6 @@ class App:
         self.__first_world = True
 
     def login(self):
-        
         attempt = LoginPage()
         attempt.createLoginPage()
         loginCredentials = attempt.loginCredentials
@@ -55,11 +54,13 @@ class App:
                     self.__container[world_name] = element
             
     def __set_selected_world(self):
-        # server_gui returns server_name and server_element (self.__selected_world[0] and [1])
-        self.__selected_world = ServerPage("Server Page", self.__container).serverGui()
+        attempt = ServerPage(self.__container)
+        attempt.createServerPage()
+        self.__selectedWorld = attempt.serverDetails
+        
 
     def __login_to_the_selected_world(self):
-        self.__wait.until(EC.element_to_be_clickable((self.__selected_world[1].find_element(By.CSS_SELECTOR, "div.default-button")))).click()
+        self.__wait.until(EC.element_to_be_clickable((self.__selectedWorld[1].find_element(By.CSS_SELECTOR, "div.default-button")))).click()
         # TODO: Try to fix this
         time.sleep(5)
 
