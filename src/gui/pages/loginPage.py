@@ -5,9 +5,14 @@ from src.gui.loginAttempt import LoginAttempt
 
 class LoginPage(DefaultPage):
 
-    def __init__(self, title="Login Credentials"):
+    def __init__(self, title="Login Credentials",):
         super().__init__(title)
         self.__emailRememberButton = IntVar()
+        self.__loginCredentials = ""
+
+    @property
+    def loginCredentials(self):
+        return self.__loginCredentials
     
     def createLoginPage(self):
         self.__createFrame()
@@ -31,12 +36,12 @@ class LoginPage(DefaultPage):
         self.__checkbtn = Checkbutton(self.__frame, text='Remember email', variable=self.__emailRememberButton, onvalue=1, offvalue=0)
         self.__checkbtn.pack(**self.properties)
         Button(self.__frame, text="Login",
-               command=self.loginAttempt).pack(**self.properties)
+               command=self.__loginAndDestroyLoginPage).pack(**self.properties)
         
-    def loginAttempt(self):
-        # print(self.__btn.get)
+    def __loginAndDestroyLoginPage(self):
         attempt = LoginAttempt(self.__emailEntry.get(), self.__passwordEntry.get(), self.__emailRememberButton.get())
-        # return attempt.getStatus()
+        self.__loginCredentials = attempt.getStatus()
+        self.__destroyLoginPage()
 
-    def destroyLoginPage(self):
+    def __destroyLoginPage(self):
         self.destroy()

@@ -25,8 +25,11 @@ class App:
         self.__first_world = True
 
     def login(self):
-        loginCreds = LoginPage().createLoginPage()
-        Login().login(loginCreds[0], loginCreds[1], self.__driver)
+        
+        attempt = LoginPage()
+        attempt.createLoginPage()
+        loginCredentials = attempt.loginCredentials
+        Login(email=loginCredentials[0], password=loginCredentials[1], saveEmail=loginCredentials[2], driver=self.__driver).login()
     
     def __get_all_active_worlds(self):
         self.__wait.until(EC.visibility_of_element_located((By.TAG_NAME, "body")))

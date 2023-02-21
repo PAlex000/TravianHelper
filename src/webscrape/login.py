@@ -11,10 +11,11 @@ class Login():
 
     regexForEmail = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b'
 
-    def __init__(self, email, password, saveEmail):
+    def __init__(self, email, password, saveEmail, driver):
         self.__email = email
         self.__password = password
         self.__saveEmailBtn = saveEmail
+        self.__driver = driver
 
     @property
     def email(self):
@@ -24,27 +25,7 @@ class Login():
     def password(self):
         return self.__password
     
-    def getStatus(self):
-        self.__emailCheck()
-        self.__passwordCheck()
-        return [self.__email, self.__password, self.__saveEmailBtn]
-
-    def __emailCheck(self):
-        if not self.__isEmailMatched():
-            raise EmailError
-    
-    def __isEmailMatched(self):
-        return True if re.fullmatch(Login.regexForEmail, self.__email) else False
-
-    def __passwordCheck(self):
-        if self.__isPasswordEmpty():
-            raise PasswordError
-    
-    def __isPasswordEmpty(self):
-        return True if len(self.__password) == 0 else False
-
-    def login(self, driver):
-        self.__driver = driver
+    def login(self):
         self.__wait = WebDriverWait(self.__driver, 10)
         # self.__save_email()
         self.__loadPage()

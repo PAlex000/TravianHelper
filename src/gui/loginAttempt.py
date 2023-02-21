@@ -6,10 +6,10 @@ class LoginAttempt():
 
     regexForEmail = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b'
 
-    def __init__(self, email, password, saveEmail):
+    def __init__(self, email, password, saveEmailBtn):
         self.__email = email
         self.__password = password
-        self.__saveEmailBtn = saveEmail
+        self.__saveEmailBtn = saveEmailBtn
 
     @property
     def email(self):
