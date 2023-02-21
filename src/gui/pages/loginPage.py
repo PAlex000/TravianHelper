@@ -1,5 +1,5 @@
 from tkinter import *
-from src.messages.error_messages import *
+from src.messages.errorMessages import *
 from src.gui.pages.defaultPage import DefaultPage
 from src.gui.attempts.loginAttempt import LoginAttempt
 

@@ -1,10 +1,7 @@
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
-from src.messages.error_messages import *
+from src.messages.errorMessages import *
 from tkinter import messagebox
-import re
-from exceptions.emailError import EmailError
-from exceptions.passwordError import PasswordError
 from selenium.webdriver.support.wait import WebDriverWait
 
 class Login():

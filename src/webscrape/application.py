@@ -4,9 +4,9 @@ from selenium.webdriver.edge.options import Options
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 from src.gui.pages.serverPage import ServerPage
-from src.messages.error_messages import *
-from src.webscrape.infra_view import Infra_view
-from src.webscrape.field_view import Field_view
+from src.messages.errorMessages import *
+from src.webscrape.views.infraView import InfraView
+from src.webscrape.views.fieldView import FieldView
 from src.gui.pages.loginPage import LoginPage
 from src.webscrape.login import Login
 import time
@@ -76,11 +76,11 @@ class App:
         time.sleep(5)
 
     def getInfraView(self):
-        infra_view = Infra_view(self.__driver)
-        infra_view.get_all_buildings()
+        infraView = InfraView(self.__driver)
+        infraView.getAllBuildings()
         # print(f"{infra_view}")
 
     def getFieldView(self):
-        field_view = Field_view(self.__driver)
-        field_view.get_all_buildings()
+        fieldView = FieldView(self.__driver)
+        fieldView.getAllBuildings()
         # print(f"{field_view}")

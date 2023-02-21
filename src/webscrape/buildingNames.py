@@ -1,4 +1,4 @@
-building_names = {
+buildingNames = {
     "buildingId1" :"Woodcutter",
     "buildingId2" :"Clay Pit",
     "buildingId3" :"Iron Mine",
@@ -37,5 +37,3 @@ building_names = {
     "buildingId45":"Hidden Treasury",
     "buildingId46":"Healing Tent",
 }
-
-
