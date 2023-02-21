@@ -1,7 +1,7 @@
 from tkinter import *
 from src.messages.error_messages import *
 from src.gui.pages.defaultPage import DefaultPage
-from src.gui.loginAttempt import LoginAttempt
+from src.gui.attempts.loginAttempt import LoginAttempt
 
 class LoginPage(DefaultPage):
 

@@ -1,6 +1,6 @@
 from tkinter import *
 from src.gui.pages.defaultPage import DefaultPage
-from src.gui.serverChooseAttempt import ServerChooseAttempt
+from src.gui.attempts.serverChooseAttempt import ServerChooseAttempt
 
 class ServerPage(DefaultPage):
 
