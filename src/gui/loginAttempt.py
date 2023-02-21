@@ -1,6 +1,6 @@
 import re
-from src.exceptions.EmailError import EmailError
-from src.exceptions.PasswordError import PasswordError
+from src.exceptions.emailError import EmailError
+from src.exceptions.passwordError import PasswordError
 
 class LoginAttempt():
 
