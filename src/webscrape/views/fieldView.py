@@ -7,7 +7,7 @@ class FieldView(GeneralView):
         super().__init__(driver)
 
     # Resource starts from 1 until 18
-    def getAllBuildings(self):
+    def getAllFieldBuildings(self):
         self._getToSpecificView("navi_resources")
         time.sleep(5)
         for buildingLocation in range(1,19):

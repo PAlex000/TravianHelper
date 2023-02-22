@@ -1,8 +1,7 @@
 from selenium import webdriver
 from selenium.webdriver.edge.options import Options
 from src.messages.errorMessages import *
-from src.webscrape.views.infraView import InfraView
-from src.webscrape.views.fieldView import FieldView
+from src.webscrape.views.villageView import Village
 from src.gui.pages.loginPage import LoginPage
 from src.webscrape.login import Login
 from src.webscrape.serverSelection import ServerSelection
@@ -13,8 +12,7 @@ class App:
         self.__configureDriver()
         self.__login()
         self.__serverSelection()
-        self.__getInfraView()
-        self.__getFieldView()
+        self.__getvillageView()
 
     def __configureDriver(self):
         self.__addOptions()
@@ -38,12 +36,6 @@ class App:
         selectedServer = ServerSelection(self.__driver)
         selectedServer.serverSelect()
 
-    def __getInfraView(self):
-        infraView = InfraView(self.__driver)
-        infraView.getAllBuildings()
-        # print(f"{infra_view}")
-
-    def __getFieldView(self):
-        fieldView = FieldView(self.__driver)
-        fieldView.getAllBuildings()
-        # print(f"{field_view}")
+    def __getvillageView(self):
+        village = Village(self.__driver)
+        village.getVillage()

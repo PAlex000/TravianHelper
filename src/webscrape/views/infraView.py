@@ -6,7 +6,7 @@ class InfraView(GeneralView):
         super().__init__(driver)
 
     # Infra starts from 19 until 40
-    def getAllBuildings(self):
+    def getAllInfraBuildings(self):
         self._getToSpecificView("navi_village")
         for buildingLocation in range(19,41):
             self._getMainView(buildingLocation, "villageView")
