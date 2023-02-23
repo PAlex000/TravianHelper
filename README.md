@@ -16,16 +16,32 @@ I am trying to improve python and webscraping, so I decided to write it in pytho
 ### Requirements:
 
  - Python
- - Python libraries: `tkinter` `selenium`
+ - Modules in requirements.txt (Might be too much, will check it later)
  - Microsoft Edge browser
 
 ### How to run:
 
 ```
-python main.py
-
-Tested on Lubuntu and Windows 10
+In root directory type:
+python -m src.main
 ```
+Tested on Lubuntu and Windows 10
 
+### How to run tests:
+
+You need credentials.json in order to run the tests successfully.
+Important: File should be put in the root directory, and named "credentials.json"
+It should be like this:
+```
+{
+    "email": "write_your_travian_kingdoms_email_here",
+    "password": "write_your_travian_kingdoms_password_here"
+}
+```
+If you want to run only the application, you don't need to create the json file!
+```
+In root directory type:
+pytest
+```
 
 ### There are lots of function not implemented yet, it's still in WIP.
