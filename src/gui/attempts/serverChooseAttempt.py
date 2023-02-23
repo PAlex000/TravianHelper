@@ -1,4 +1,4 @@
-from exceptions.serverNameError import ServerNameError
+from src.exceptions.serverNameError import ServerNameError
 
 class ServerChooseAttempt():
 
