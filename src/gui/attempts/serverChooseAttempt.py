@@ -7,12 +7,12 @@ class ServerChooseAttempt():
         self.__serverElement = serverElement
 
     @property
-    def email(self):
-        return self.__email
+    def serverName(self):
+        return self.__serverName
     
     @property
-    def password(self):
-        return self.__password
+    def serverElement(self):
+        return self.__serverElement
     
     def getStatus(self):
         self.__serverNameCheck()
