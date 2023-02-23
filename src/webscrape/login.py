@@ -3,6 +3,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from src.messages.errorMessages import *
 from tkinter import messagebox
 from selenium.webdriver.support.wait import WebDriverWait
+import sys
 
 class Login():
 
@@ -62,8 +63,7 @@ class Login():
             self.__wait.until(EC.visibility_of_element_located((By.CLASS_NAME, 'game-world')))
         except:
             messagebox.showerror(FAILED_LOGIN_TITLE, FAILED_LOGIN_MSG)
-            self.__driver.quit()
-            return -1
+            sys.exit()
 
     def __save_email(self):
         if self.__pw_checkbox:
