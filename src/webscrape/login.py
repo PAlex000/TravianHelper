@@ -64,13 +64,3 @@ class Login():
         except:
             messagebox.showerror(FAILED_LOGIN_TITLE, FAILED_LOGIN_MSG)
             sys.exit()
-
-    def __save_email(self):
-        if self.__pw_checkbox:
-            temp_dict = dict({
-            "Email": self.__email,
-            "Password": self.__password 
-            })
-            with open("login_credentials.json", "w") as file:
-                for i in temp_dict:
-                    file.write(i)
