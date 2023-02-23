@@ -6,7 +6,7 @@ class Test_Login(BaseTest):
     
     def testLoginWithCorrectCredentials(self):
         self._driverSetUp()
-        self._readCredentialsFromJSON()
+        self._getCredentialsFromJSON()
         saveEmail = 0
         self.login = Login(self._email, self._password, saveEmail, self._driver)
         self.login.login()

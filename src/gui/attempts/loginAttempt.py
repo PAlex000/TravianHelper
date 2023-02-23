@@ -19,6 +19,10 @@ class LoginAttempt():
     def password(self):
         return self.__password
     
+    @property
+    def saveEmailBtn(self):
+        return self.__saveEmailBtn
+
     def getStatus(self):
         self.__emailCheck()
         self.__passwordCheck()

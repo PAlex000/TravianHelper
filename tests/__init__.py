@@ -13,7 +13,7 @@ class BaseTest():
     def _driverQuit(self):
         self._driver.quit()
         
-    def _readCredentialsFromJSON(self):
+    def _getCredentialsFromJSON(self):
         with open('./credentials.json', 'r') as f:
             data = json.load(f)
             self._email = data["email"]
