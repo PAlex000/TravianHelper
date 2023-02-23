@@ -1,7 +1,12 @@
 from selenium import webdriver
 from selenium.webdriver.edge.options import Options
 
+
 class Driver():
+
+    def __init__(self):
+        self.__driver = ""
+        self.__options = ""
 
     def __setDriver(self):
         self.__driver = webdriver.Edge(options=self.__options)

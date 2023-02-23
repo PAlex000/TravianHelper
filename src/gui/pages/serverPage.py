@@ -1,6 +1,8 @@
-from tkinter import *
-from src.gui.pages.defaultPage import DefaultPage
+from tkinter import Button, IntVar, Label, Radiobutton
+
 from src.gui.attempts.serverChooseAttempt import ServerChooseAttempt
+from src.gui.pages.defaultPage import DefaultPage
+
 
 class ServerPage(DefaultPage):
 
@@ -8,6 +10,8 @@ class ServerPage(DefaultPage):
         super().__init__(title)
         self.__serverElements = serverElements
         self.__serverDetails = []
+        self.__serverCount = IntVar()
+        self.__serverNames = []
 
     @property
     def serverDetails(self):
@@ -19,20 +23,21 @@ class ServerPage(DefaultPage):
         self.mainloop()
 
     def __createLabel(self):
-        Label(self.frame, text="Please choose which server you want to login: ").pack(**self.properties)
+        Label(self.frame, text="Please choose which server you want to login: ") \
+        .pack(**self.properties)
 
     def __createButtons(self):
         self.__getServerNames()
-        self.__serverCount = IntVar()
         for serverName in self.__serverNames:
-            Radiobutton(self.frame, text=serverName, variable=self.__serverCount, value=self.__serverCount.get()).pack(**self.properties)
+            Radiobutton(self.frame, text=serverName, variable=self.__serverCount,
+                        value=self.__serverCount.get()).pack(**self.properties)
             self.__serverCount.set(self.__serverCount.get() + 1)
-        Button(self.frame, text="Choose", command=self.__serverChooseAndDestroyServerPage).pack(**self.properties)
+        Button(self.frame, text="Choose", command=self.__serverChooseAndDestroyServerPage) \
+        .pack(**self.properties)
         # Make the first element default
         self.__serverCount.set(0)
 
     def __getServerNames(self):
-        self.__serverNames = []
         for serverName in self.__serverElements.keys():
             self.__serverNames.append(serverName)
 

@@ -1,5 +1,5 @@
 from src.exceptions.serverNameError import ServerNameError
-from src.exceptions.serverElementError import ServerElementError
+
 
 class ServerChooseAttempt():
 
@@ -10,14 +10,9 @@ class ServerChooseAttempt():
     @property
     def serverName(self):
         return self.__serverName
-    
-    @property
-    def serverElement(self):
-        return self.__serverElement
-    
+
     def getStatus(self):
         self.__serverNameCheck()
-        self.__serverElementCheck()
 
         return [self.__serverName, self.__serverElement]
 
@@ -26,11 +21,4 @@ class ServerChooseAttempt():
             raise ServerNameError
 
     def __isServerNameEmpty(self):
-        return True if len(self.__serverName) == 0 else False
-
-    def __serverElementCheck(self):
-        if self.__isServerElementEmpty():
-            raise ServerElementError
-
-    def __isServerElementEmpty(self):
-        return True if len(self.__serverElement) == 0 else False
+        return len(self.__serverName) == 0

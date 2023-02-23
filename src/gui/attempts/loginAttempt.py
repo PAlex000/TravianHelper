@@ -1,6 +1,8 @@
 import re
+
 from src.exceptions.EmailError import EmailError
 from src.exceptions.PasswordError import PasswordError
+
 
 class LoginAttempt():
 
@@ -14,11 +16,11 @@ class LoginAttempt():
     @property
     def email(self):
         return self.__email
-    
+
     @property
     def password(self):
         return self.__password
-    
+
     @property
     def saveEmailBtn(self):
         return self.__saveEmailBtn
@@ -31,13 +33,13 @@ class LoginAttempt():
     def __emailCheck(self):
         if not self.__isEmailMatched():
             raise EmailError
-    
+
     def __isEmailMatched(self):
-        return True if re.fullmatch(LoginAttempt.regexForEmail, self.__email) else False
+        return re.fullmatch(LoginAttempt.regexForEmail, self.__email)
 
     def __passwordCheck(self):
         if self.__isPasswordEmpty():
             raise PasswordError
-    
+
     def __isPasswordEmpty(self):
-        return True if len(self.__password) == 0 else False
+        return len(self.__password) == 0
