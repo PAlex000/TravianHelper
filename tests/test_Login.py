@@ -1,44 +1,24 @@
 import pytest
-from selenium import webdriver
-from selenium.webdriver.edge.options import Options
 from src.webscrape.login import Login
-import json
+from tests import BaseTest
 
-class Test_Login():
+class Test_Login(BaseTest):
     
     def testLoginWithCorrectCredentials(self):
-        self.driverSetUp()
-        self.getCredentials()
+        self._driverSetUp()
+        self._readCredentialsFromJSON()
         saveEmail = 0
-        self.login = Login(self.__email, self.__password, saveEmail, self.__driver)
+        self.login = Login(self._email, self._password, saveEmail, self._driver)
         self.login.login()
-        assert self.__driver.current_url == "https://lobby.kingdoms.com/#/"
-        self.driverQuit()
-
-    def driverSetUp(self):
-        self.__options = Options()
-        self.__options.add_experimental_option('detach', True)
-        self.__options.add_experimental_option('excludeSwitches', ['enable-logging'])
-        self.__driver = webdriver.Edge(options=self.__options)
-        
-    def getCredentials(self):
-        self.readCredentialsFromJSON()
-
-    def readCredentialsFromJSON(self):
-        with open('./credentials.json', 'r') as f:
-            data = json.load(f)
-            self.__email = data["email"]
-            self.__password = data["password"]
-            
-    def driverQuit(self):
-        self.__driver.quit()
+        assert self._driver.current_url == "https://lobby.kingdoms.com/#/"
+        self._driverQuit()
 
     def testLoginWithIncorrectCredentials(self):
-        self.driverSetUp()
+        self._driverSetUp()
         email = "definitelyAgoodEmail@gmail.com"
         password = "1234"
         saveEmail = 0
-        self.login = Login(email, password, saveEmail, self.__driver)
+        self.login = Login(email, password, saveEmail, self._driver)
         with pytest.raises(SystemExit):
             self.login.login()
-        self.driverQuit()
+        self._driverQuit()
