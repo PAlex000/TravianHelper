@@ -1,7 +1,9 @@
 import pytest
-from tests import BaseTest
-from src.gui.attempts.serverChooseAttempt import ServerChooseAttempt
+
 from src.exceptions.serverNameError import ServerNameError
+from src.gui.attempts.serverChooseAttempt import ServerChooseAttempt
+from tests import BaseTest
+
 
 class Test_ServerChooseAttempt(BaseTest):
 

@@ -1,6 +1,8 @@
 import pytest
+
 from src.webscrape.login import Login
 from tests import BaseTest
+
 
 class Test_Login(BaseTest):
     

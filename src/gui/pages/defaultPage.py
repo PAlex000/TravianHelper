@@ -3,7 +3,7 @@ from tkinter import BOTH, TRUE, Frame, Tk
 
 class DefaultPage(Tk):
 
-    def __init__(self, title):
+    def __init__(self, title="unnamed"):
         super().__init__()
         self.geometry("600x400")
         self.__properties = {'ipadx': 20, 'ipady': 10, 'fill': BOTH}
