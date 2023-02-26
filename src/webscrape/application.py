@@ -6,7 +6,6 @@ from src.webscrape.views.villageView import Village
 
 
 class App:
-
     def __init__(self):
         self.__configuredDriver = ""
 
@@ -25,8 +24,12 @@ class App:
         attempt.createLoginPage()
         loginCredentials = attempt.loginCredentials
 
-        Login(loginCredentials[0], loginCredentials[1], loginCredentials[2],
-              self.__configuredDriver.driver).login()
+        Login(
+            loginCredentials[0],
+            loginCredentials[1],
+            loginCredentials[2],
+            self.__configuredDriver.driver,
+        ).login()
 
     def __serverSelection(self):
         selectedServer = ServerSelection(self.__configuredDriver.driver)

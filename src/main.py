@@ -5,5 +5,6 @@ def main():
     travian_helper = App()
     travian_helper.run()
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     main()

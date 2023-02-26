@@ -1,4 +1,4 @@
-class Building():
+class Building:
     def __init__(self, location, name, buildingId, level):
         self.__location = location
         self.__name = name

@@ -4,9 +4,8 @@ from src.exceptions.EmailError import EmailError
 from src.exceptions.PasswordError import PasswordError
 
 
-class LoginAttempt():
-
-    regexForEmail = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b'
+class LoginAttempt:
+    regexForEmail = r"\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b"
 
     def __init__(self, email, password, saveEmailBtn):
         self.__email = email

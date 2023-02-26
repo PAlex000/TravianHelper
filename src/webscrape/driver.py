@@ -2,8 +2,7 @@ from selenium import webdriver
 from selenium.webdriver.edge.options import Options
 
 
-class Driver():
-
+class Driver:
     def __init__(self):
         self.__driver = ""
         self.__options = ""
@@ -13,8 +12,8 @@ class Driver():
 
     def __addOptions(self):
         self.__options = Options()
-        self.__options.add_experimental_option('detach', True)
-        self.__options.add_experimental_option('excludeSwitches', ['enable-logging'])
+        self.__options.add_experimental_option("detach", True)
+        self.__options.add_experimental_option("excludeSwitches", ["enable-logging"])
 
     def configureDriver(self):
         self.__addOptions()

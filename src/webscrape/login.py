@@ -9,9 +9,8 @@ from selenium.webdriver.support.wait import WebDriverWait
 from src.messages.errorMessages import FAILED_LOGIN_MSG, FAILED_LOGIN_TITLE
 
 
-class Login():
-
-    regexForEmail = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b'
+class Login:
+    regexForEmail = r"\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b"
 
     def __init__(self, email, password, saveEmail, driver):
         self.__email = email
@@ -40,7 +39,6 @@ class Login():
         self.__clickLogin()
         self.__checkLogin()
 
-
     def __loadPage(self):
         self.__driver.get("https://www.kingdoms.com/")
 
@@ -49,16 +47,22 @@ class Login():
         self.__wait.until(EC.element_to_be_clickable((By.ID, "loginButton"))).click()
 
     def __switchIframes(self):
-        self.__wait. \
-        until(EC.frame_to_be_available_and_switch_to_it((By.CSS_SELECTOR, "iframe.mellon-iframe")))
-        self.__wait. \
-        until(EC.frame_to_be_available_and_switch_to_it((By.TAG_NAME, "iframe")))
+        self.__wait.until(
+            EC.frame_to_be_available_and_switch_to_it(
+                (By.CSS_SELECTOR, "iframe.mellon-iframe")
+            )
+        )
+        self.__wait.until(
+            EC.frame_to_be_available_and_switch_to_it((By.TAG_NAME, "iframe"))
+        )
 
     def __getLoginFields(self):
-        self.__email_field = self.__wait \
-        .until(EC.visibility_of_element_located((By.NAME, "email")))
-        self.__password_field = self.__wait \
-        .until(EC.visibility_of_element_located((By.NAME, "password")))
+        self.__email_field = self.__wait.until(
+            EC.visibility_of_element_located((By.NAME, "email"))
+        )
+        self.__password_field = self.__wait.until(
+            EC.visibility_of_element_located((By.NAME, "password"))
+        )
 
     def __setLoginCredentials(self):
         self.__email_field.send_keys(self.__email)
@@ -70,7 +74,9 @@ class Login():
 
     def __checkLogin(self):
         try:
-            self.__wait.until(EC.visibility_of_element_located((By.CLASS_NAME, 'game-world')))
+            self.__wait.until(
+                EC.visibility_of_element_located((By.CLASS_NAME, "game-world"))
+            )
         except TimeoutException:
             messagebox.showerror(FAILED_LOGIN_TITLE, FAILED_LOGIN_MSG)
             sys.exit()

@@ -1,8 +1,7 @@
 from src.exceptions.serverNameError import ServerNameError
 
 
-class ServerChooseAttempt():
-
+class ServerChooseAttempt:
     def __init__(self, serverName, serverElement):
         self.__serverName = serverName
         self.__serverElement = serverElement

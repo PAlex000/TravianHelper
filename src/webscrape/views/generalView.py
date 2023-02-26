@@ -5,7 +5,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 from src.webscrape.buildingNames import buildingNames
 
 
-class GeneralView():
+class GeneralView:
     def __init__(self, driver):
         self._fields = []
         self._driver = driver
@@ -21,7 +21,7 @@ class GeneralView():
     def fields(self):
         return self._fields
 
-    def _getMainView(self, locationId, villageview : str):
+    def _getMainView(self, locationId, villageview: str):
         self._getBuildingId(locationId, villageview)
         self._getBuildingLocation()
         self._getBuildingName()
@@ -32,20 +32,28 @@ class GeneralView():
         self.__getWebElement(locationId)
         self.__getStartIndex("type_")
         if self.__doesBuildingExist():
-            self._buildingId = "buildingId" + self.__buildingWebElement \
-            .get_attribute('innerHTML') \
-            [self.__startIndex + len("type_") :self.__startIndex + len("type_") + 2]
+            self._buildingId = (
+                "buildingId"
+                + self.__buildingWebElement.get_attribute("innerHTML")[
+                    self.__startIndex
+                    + len("type_") : self.__startIndex
+                    + len("type_")
+                    + 2
+                ]
+            )
             self._buildingId = self._buildingId.rstrip()
         else:
             self._buildingId = "free_slot"
 
     def __getWebElement(self, locationId):
-        self.__buildingWebElement = self._driver \
-        .find_element(By.CLASS_NAME, "buildingLocation" + str(locationId))
+        self.__buildingWebElement = self._driver.find_element(
+            By.CLASS_NAME, "buildingLocation" + str(locationId)
+        )
 
     def __getStartIndex(self, stringToSearchFor):
-        self.__startIndex = self.__buildingWebElement \
-        .get_attribute('innerHTML').find(stringToSearchFor)
+        self.__startIndex = self.__buildingWebElement.get_attribute("innerHTML").find(
+            stringToSearchFor
+        )
 
     def __doesBuildingExist(self):
         return self.__startIndex != -1
@@ -53,9 +61,15 @@ class GeneralView():
     def _getBuildingLocation(self):
         self.__getStartIndex("location_")
         if self.__doesBuildingExist():
-            self._location = "location" + self.__buildingWebElement \
-            .get_attribute('innerHTML') \
-            [self.__startIndex + len("location_"):self.__startIndex + len("location_") + 2]
+            self._location = (
+                "location"
+                + self.__buildingWebElement.get_attribute("innerHTML")[
+                    self.__startIndex
+                    + len("location_") : self.__startIndex
+                    + len("location_")
+                    + 2
+                ]
+            )
         else:
             self._location = "free_slot"
 
@@ -67,8 +81,9 @@ class GeneralView():
 
     def _getBuildingLevel(self):
         if self.__doesBuildingExist():
-            self._buildingLevel = self.__buildingWebElement \
-            .find_element(By.CLASS_NAME, "buildingLevel").get_attribute('innerHTML')
+            self._buildingLevel = self.__buildingWebElement.find_element(
+                By.CLASS_NAME, "buildingLevel"
+            ).get_attribute("innerHTML")
         else:
             self._buildingLevel = 0
 
