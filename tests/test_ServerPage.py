@@ -23,7 +23,7 @@ class Test_ServerPage(BaseTest):
         }
         serverpage = ServerPage(server)
         serverpage.serverNames = "COM15X3"
-        serverpage.after(500, serverpage.chooseButton.invoke())
+        serverpage.after(500, lambda: serverpage.chooseButton.invoke())
         serverpage.createServerPage()
 
         assert serverpage.serverNames == ["COM15X3", "COM3X3", "COM1X3", "COM2X3"]
@@ -37,7 +37,7 @@ class Test_ServerPage(BaseTest):
         serverpage = ServerPage(server)
 
         serverpage.after(500, lambda: serverpage.serverCount.set(2))
-        serverpage.after(1000, serverpage.chooseButton.invoke())
+        serverpage.after(1000, lambda: serverpage.chooseButton.invoke())
         serverpage.createServerPage()
 
         assert serverpage.serverDetails == {
