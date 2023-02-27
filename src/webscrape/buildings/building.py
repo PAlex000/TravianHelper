@@ -23,4 +23,4 @@ class Building:
 
     def __str__(self):
         return f"Building(name = {self.name}, location = {self.location}, \
-buildingid = {self.buildingId}, level = {self.level})"
+buildingId = {self.buildingId}, level = {self.level})"
