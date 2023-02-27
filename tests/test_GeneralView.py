@@ -1,7 +1,5 @@
 from selenium import webdriver
 
-from src.webscrape.login import Login
-from src.webscrape.serverSelection import ServerSelection
 from src.webscrape.views.generalView import GeneralView
 from tests import BaseTest
 
@@ -16,6 +14,7 @@ class Test_GeneralView(BaseTest):
             and isinstance(testGeneralView.driver, webdriver.Edge)
             and testGeneralView.buildingId == ""
             and testGeneralView.location == ""
+            and testGeneralView.buildingName == ""
             and testGeneralView.buildingId == ""
             and testGeneralView.buildingLevel == ""
         )
