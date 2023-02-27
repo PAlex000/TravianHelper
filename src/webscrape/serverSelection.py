@@ -24,6 +24,7 @@ class ServerSelection:
         self.__loginToTheSelectedWorld()
 
     def __getAllActiveWorlds(self):
+        time.sleep(3)
         self.__wait.until(EC.visibility_of_element_located((By.TAG_NAME, "body")))
         self.__wait.until(
             EC.visibility_of_element_located((By.CLASS_NAME, "game-world"))
