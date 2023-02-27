@@ -22,6 +22,7 @@ class App:
     def __login(self):
         attempt = LoginPage()
         attempt.createLoginPage()
+        attempt.startMainLoop()
         loginCredentials = attempt.loginCredentials
 
         Login(

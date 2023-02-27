@@ -13,12 +13,18 @@ class Test_DefaultPage(BaseTest):
             and defaultPage.title() == "Title"
         )
 
+        defaultPage.destroy()
+
     def testDefaultPageWithoutTitle(self):
         defaultPage = DefaultPage()
 
         assert defaultPage.title() == "unnamed"
 
+        defaultPage.destroy()
+
     def testDefaultPageFrame(self):
         defaultPage = DefaultPage("Title")
 
         assert isinstance(defaultPage.frame, Frame)
+
+        defaultPage.destroy()
