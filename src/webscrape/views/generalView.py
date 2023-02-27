@@ -21,6 +21,26 @@ class GeneralView:
     def fields(self):
         return self._fields
 
+    @property
+    def driver(self):
+        return self._driver
+
+    @property
+    def buildingId(self):
+        return self._buildingId
+
+    @property
+    def location(self):
+        return self._location
+
+    @property
+    def buildingName(self):
+        return self._buildingName
+
+    @property
+    def buildingLevel(self):
+        return self._buildingLevel
+
     def _getMainView(self, locationId, villageview: str):
         self._getBuildingId(locationId, villageview)
         self._getBuildingLocation()
