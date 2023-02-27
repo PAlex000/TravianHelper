@@ -1,10 +1,13 @@
-from src.webscrape.views.villageView import Village
 from src.gui.pages.loginPage import LoginPage
+from src.webscrape.driver import Driver
 from src.webscrape.login import Login
 from src.webscrape.serverSelection import ServerSelection
-from src.webscrape.driver import Driver
+from src.webscrape.views.villageView import Village
+
 
 class App:
+    def __init__(self):
+        self.__configuredDriver = ""
 
     def run(self):
         self.__configureDriver()
@@ -19,9 +22,15 @@ class App:
     def __login(self):
         attempt = LoginPage()
         attempt.createLoginPage()
+        attempt.startMainLoop()
         loginCredentials = attempt.loginCredentials
 
-        Login(loginCredentials[0], loginCredentials[1], loginCredentials[2], self.__configuredDriver.driver).login()
+        Login(
+            loginCredentials["email"],
+            loginCredentials["password"],
+            loginCredentials["saveEmail"],
+            self.__configuredDriver.driver,
+        ).login()
 
     def __serverSelection(self):
         selectedServer = ServerSelection(self.__configuredDriver.driver)

@@ -1,5 +1,7 @@
 from tkinter import messagebox
+
 from src.messages.errorMessages import INVALID_EMAIL_MSG, INVALID_EMAIL_TITLE
+
 
 class EmailError(Exception):
     def __init__(self):

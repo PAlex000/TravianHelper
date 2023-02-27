@@ -2,7 +2,7 @@ from src.webscrape.views.fieldView import FieldView
 from src.webscrape.views.infraView import InfraView
 
 
-class Village():
+class Village:
     def __init__(self, driver):
         self.__driver = driver
 
