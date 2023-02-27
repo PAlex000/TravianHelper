@@ -1,7 +1,7 @@
 from src.exceptions.serverNameError import ServerNameError
 
 
-class ServerChooseAttempt:
+class ServerNameCheck:
     def __init__(self, serverName, serverElement):
         self.__serverName = serverName
         self.__serverElement = serverElement
@@ -10,10 +10,10 @@ class ServerChooseAttempt:
     def serverName(self):
         return self.__serverName
 
-    def getStatus(self):
+    def getServerDetails(self):
         self.__serverNameCheck()
 
-        return [self.__serverName, self.__serverElement]
+        return {"servername": self.__serverName, "serverelement": self.__serverElement}
 
     def __serverNameCheck(self):
         if self.__isServerNameEmpty():

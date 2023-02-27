@@ -1,6 +1,6 @@
 from tkinter import Button, IntVar, Label, Radiobutton
 
-from src.gui.attempts.serverChooseAttempt import ServerChooseAttempt
+from src.gui.attempts.serverNameCheck import ServerNameCheck
 from src.gui.pages.defaultPage import DefaultPage
 
 
@@ -53,8 +53,8 @@ class ServerPage(DefaultPage):
         selectedServerElement = list(self.__serverElements.values())[
             self.__serverCount.get()
         ]
-        attempt = ServerChooseAttempt(selectedServerName, selectedServerElement)
-        self.__serverDetails = attempt.getStatus()
+        attempt = ServerNameCheck(selectedServerName, selectedServerElement)
+        self.__serverDetails = attempt.getServerDetails()
         self.__destroyServerPage()
 
     def __destroyServerPage(self):

@@ -79,7 +79,7 @@ class ServerSelection:
         self.__wait.until(
             EC.element_to_be_clickable(
                 (
-                    self.__selectedWorld[1].find_element(
+                    self.__selectedWorld["serverelement"].find_element(
                         By.CSS_SELECTOR, "div.default-button"
                     )
                 )
