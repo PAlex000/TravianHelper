@@ -1,6 +1,6 @@
 from tkinter import Button, Checkbutton, Entry, IntVar
 
-from src.gui.attempts.loginAttempt import LoginAttempt
+from gui.attempts.loginInputCheck import LoginInputCheck
 from src.gui.pages.defaultPage import DefaultPage
 
 
@@ -47,12 +47,12 @@ class LoginPage(DefaultPage):
         )
 
     def __loginAndDestroyLoginPage(self):
-        attempt = LoginAttempt(
+        attempt = LoginInputCheck(
             self.__emailEntry.get(),
             self.__passwordEntry.get(),
             self.__emailRememberButton.get(),
         )
-        self.__loginCredentials = attempt.getStatus()
+        self.__loginCredentials = attempt.getLoginCredentials()
         self.__destroyLoginPage()
 
     def __destroyLoginPage(self):

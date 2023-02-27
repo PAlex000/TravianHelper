@@ -6,7 +6,6 @@ from tests import BaseTest
 
 
 class Test_ServerChooseAttempt(BaseTest):
-
     def testServerChooseAttemptWithOneServer(self):
         attempt = ServerChooseAttempt("COM3X3", "element")
         attempt.getStatus()

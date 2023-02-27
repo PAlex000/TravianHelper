@@ -4,7 +4,7 @@ from src.exceptions.EmailError import EmailError
 from src.exceptions.PasswordError import PasswordError
 
 
-class LoginAttempt:
+class LoginInputCheck:
     regexForEmail = r"\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b"
 
     def __init__(self, email, password, saveEmailBtn):
@@ -24,7 +24,7 @@ class LoginAttempt:
     def saveEmailBtn(self):
         return self.__saveEmailBtn
 
-    def getStatus(self):
+    def getLoginCredentials(self):
         self.__emailCheck()
         self.__passwordCheck()
         return {
@@ -38,7 +38,7 @@ class LoginAttempt:
             raise EmailError
 
     def __isEmailMatched(self):
-        return re.fullmatch(LoginAttempt.regexForEmail, self.__email)
+        return re.fullmatch(LoginInputCheck.regexForEmail, self.__email)
 
     def __passwordCheck(self):
         if self.__isPasswordEmpty():

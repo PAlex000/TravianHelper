@@ -1,4 +1,4 @@
-from tkinter import BOTH, TRUE, Frame
+from tkinter import BOTH, Frame
 
 import pytest
 
@@ -7,13 +7,14 @@ from tests import BaseTest
 
 
 class Test_DefaultPage(BaseTest):
-
     def testDefaultPageWithTitle(self):
         self._driverSetUp()
         defaultPage = DefaultPage("Title")
 
-        assert defaultPage.properties == {'ipadx': 20, 'ipady': 10, 'fill': BOTH} and \
-        defaultPage.title() == "Title"
+        assert (
+            defaultPage.properties == {"ipadx": 20, "ipady": 10, "fill": BOTH}
+            and defaultPage.title() == "Title"
+        )
 
         self._driverQuit()
 
