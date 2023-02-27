@@ -8,13 +8,31 @@ class ServerPage(DefaultPage):
     def __init__(self, serverElements, title="Server Page"):
         super().__init__(title)
         self.__serverElements = serverElements
-        self.__serverDetails = []
+        self.__serverDetails = {"servername": "", "serverelement": ""}
         self.__serverCount = IntVar()
+        self.__serverCount.set(0)
         self.__serverNames = []
+        self.__chooseButton = Button()
 
     @property
     def serverDetails(self):
         return self.__serverDetails
+
+    @property
+    def serverCount(self):
+        return self.__serverCount
+
+    @property
+    def serverNames(self):
+        return self.__serverNames
+
+    @serverNames.setter
+    def serverNames(self, name):
+        self.__serverNames.append(name)
+
+    @property
+    def chooseButton(self):
+        return self.__chooseButton
 
     def createServerPage(self):
         self.__createLabel()
@@ -36,9 +54,10 @@ class ServerPage(DefaultPage):
                 value=self.__serverCount.get(),
             ).pack(**self.properties)
             self.__serverCount.set(self.__serverCount.get() + 1)
-        Button(
+        self.__chooseButton = Button(
             self.frame, text="Choose", command=self.__serverChooseAndDestroyServerPage
-        ).pack(**self.properties)
+        )
+        self.__chooseButton.pack(**self.properties)
         # Make the first element default
         self.__serverCount.set(0)
 
