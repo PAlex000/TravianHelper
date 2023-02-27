@@ -27,7 +27,11 @@ class LoginAttempt:
     def getStatus(self):
         self.__emailCheck()
         self.__passwordCheck()
-        return [self.__email, self.__password, self.__saveEmailBtn]
+        return {
+            "email": self.__email,
+            "password": self.__password,
+            "saveEmail": self.__saveEmailBtn,
+        }
 
     def __emailCheck(self):
         if not self.__isEmailMatched():

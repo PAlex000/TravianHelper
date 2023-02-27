@@ -10,8 +10,6 @@ from src.messages.errorMessages import FAILED_LOGIN_MSG, FAILED_LOGIN_TITLE
 
 
 class Login:
-    regexForEmail = r"\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b"
-
     def __init__(self, email, password, saveEmail, driver):
         self.__email = email
         self.__password = password

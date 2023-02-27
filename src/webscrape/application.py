@@ -25,9 +25,9 @@ class App:
         loginCredentials = attempt.loginCredentials
 
         Login(
-            loginCredentials[0],
-            loginCredentials[1],
-            loginCredentials[2],
+            loginCredentials["email"],
+            loginCredentials["password"],
+            loginCredentials["saveEmail"],
             self.__configuredDriver.driver,
         ).login()
 
