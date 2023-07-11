@@ -13,17 +13,16 @@ class ServerSelection:
         self.__wait = WebDriverWait(self.__driver, 10)
         # A dict which has "server_name" : "its button reference" key-values
         self.__allServers = {}
-        # It's for checking if the selected world is first or not
-        self.__firstWorld = True
         self.__allActiveWorlds = ""
         self.__selectedWorld = ""
+        self.__firstWorld = True
 
     def serverSelect(self):
-        self.__getAllActiveWorlds()
+        self.__setAllActiveWorlds()
         self.__setSelectedWorld()
         self.__loginToTheSelectedWorld()
 
-    def __getAllActiveWorlds(self):
+    def __setAllActiveWorlds(self):
         time.sleep(3)
         self.__wait.until(EC.visibility_of_element_located((By.TAG_NAME, "body")))
         self.__wait.until(
@@ -33,43 +32,46 @@ class ServerSelection:
             By.CLASS_NAME, "game-world"
         )
 
-        for element in self.__allActiveWorlds:
-            self.__getWorld(element)
+        maxServerCount = self.__getActiveServerCount()
 
-    def __getWorld(self, serverElement):
-        self.__driver.implicitly_wait(20)
-        if (
-            serverElement.find_element(By.CSS_SELECTOR, "div.default-button")
+        for element in self.__allActiveWorlds:
+            if maxServerCount == 0:
+                break
+
+            maxServerCount -= 1
+            self.__setWorldDetails(element)
+
+    def __getActiveServerCount(self):
+        return len(self.__driver.find_elements(By.CLASS_NAME, "avatar-name"))
+
+    def __setWorldDetails(self, serverElement):
+        if self.__firstWorld:
+            world_name = self.__getFirstWorldname(serverElement)
+            world_name = world_name.split("-")[1].lstrip()
+            world_name += self.__getAvatarName(serverElement)
+            self.__firstWorld = False
+            self.__allServers[world_name] = serverElement
+        else:
+            world_name = self.__getWorldName(serverElement)
+            world_name += self.__getAvatarName(serverElement)
+            self.__allServers[world_name] = serverElement
+
+    def __getFirstWorldname(self, serverElement):
+        return (
+            serverElement.find_element(By.CLASS_NAME, "game-world-name")
             .find_element(By.TAG_NAME, "span")
             .get_attribute("innerHTML")
-            == "Continue playing"
-        ):
-            if self.__IsServerCountMoreThanOne(self.__allActiveWorlds):
-                if self.__firstWorld:
-                    world_name = (
-                        serverElement.find_element(By.CLASS_NAME, "game-world-name")
-                        .find_element(By.TAG_NAME, "span")
-                        .get_attribute("innerHTML")
-                    )
-                    world_name = world_name.split("-")[1].lstrip()
-                    self.__firstWorld = False
-                    self.__allServers[world_name] = serverElement
-                else:
-                    world_name = serverElement.find_element(
-                        By.CLASS_NAME, "game-world-name"
-                    ).get_attribute("innerHTML")
-                    self.__allServers[world_name] = serverElement
-            else:
-                world_name = (
-                    serverElement.find_element(By.CLASS_NAME, "game-world-name")
-                    .find_element(By.TAG_NAME, "span")
-                    .get_attribute("innerHTML")
-                )
-                world_name = world_name.split("-")[1].lstrip()
-                self.__allServers[world_name] = serverElement
+        )
 
-    def __IsServerCountMoreThanOne(self, servers):
-        return len(servers) > 1
+    def __getAvatarName(self, serverElement):
+        return " - " + serverElement.find_element(
+            By.CLASS_NAME, "avatar-name"
+        ).get_attribute("innerHTML")
+
+    def __getWorldName(self, serverElement):
+        return serverElement.find_element(
+            By.CLASS_NAME, "game-world-name"
+        ).get_attribute("innerHTML")
 
     def __setSelectedWorld(self):
         attempt = ServerPage(self.__allServers)
