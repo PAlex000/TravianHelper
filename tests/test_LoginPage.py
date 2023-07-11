@@ -1,6 +1,6 @@
 from tkinter import Button, Entry
 
-from src.gui.pages.loginPage import LoginPage
+from gui.pages.login_page import LoginPage
 
 
 class Test_LoginPage:

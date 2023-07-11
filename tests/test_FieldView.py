@@ -1,7 +1,7 @@
-from src.webscrape.buildings.fieldBuilding import FieldBuilding
+from webscrape.buildings.field_building import FieldBuilding
 from src.webscrape.login import Login
-from src.webscrape.serverSelection import ServerSelection
-from src.webscrape.views.fieldView import FieldView
+from webscrape.server_selection import ServerSelection
+from webscrape.views.field_view import FieldView
 from tests import BaseTest
 
 

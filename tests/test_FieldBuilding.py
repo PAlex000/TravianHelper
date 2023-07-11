@@ -1,4 +1,4 @@
-from src.webscrape.buildings.fieldBuilding import FieldBuilding
+from webscrape.buildings.field_building import FieldBuilding
 
 
 class Test_FieldBuilding:

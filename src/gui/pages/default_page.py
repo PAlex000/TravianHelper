@@ -8,10 +8,10 @@ class DefaultPage(Tk):
         self.geometry("600x400")
         self.__properties = {"ipadx": 20, "ipady": 10, "fill": BOTH}
         self.title(title)
-        self.__createFrame()
+        self.__create_frame()
         self.protocol("WM_DELETE_WINDOW", sys.exit)
 
-    def __createFrame(self):
+    def __create_frame(self):
         self.__frame = Frame(self, bg="lightblue")
         self.__frame.pack(fill="both", expand=TRUE)
 

@@ -1,7 +1,7 @@
-from src.webscrape.buildings.infraBuilding import InfraBuilding
+from webscrape.buildings.infra_building import InfraBuilding
 from src.webscrape.login import Login
-from src.webscrape.serverSelection import ServerSelection
-from src.webscrape.views.infraView import InfraView
+from webscrape.server_selection import ServerSelection
+from webscrape.views.infra_view import InfraView
 from tests import BaseTest
 
 

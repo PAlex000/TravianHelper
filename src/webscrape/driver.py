@@ -15,14 +15,14 @@ class Driver:
     def options(self):
         return self.__options
 
-    def configureDriver(self):
-        self.__addOptions()
-        self.__setDriver()
+    def configure_driver(self):
+        self.__add_options()
+        self.__set_driver()
 
-    def __addOptions(self):
+    def __add_options(self):
         self.__options = Options()
         self.__options.add_experimental_option("detach", True)
         self.__options.add_experimental_option("excludeSwitches", ["enable-logging"])
 
-    def __setDriver(self):
+    def __set_driver(self):
         self.__driver = webdriver.Edge(options=self.__options)

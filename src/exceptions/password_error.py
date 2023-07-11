@@ -1,6 +1,6 @@
 from tkinter import messagebox
 
-from src.messages.errorMessages import INVALID_PASSWORD_MSG, INVALID_PASSWORD_TITLE
+from src.messages.error_messages import INVALID_PASSWORD_MSG, INVALID_PASSWORD_TITLE
 
 
 class PasswordError(Exception):

@@ -1,6 +1,6 @@
 from tkinter import messagebox
 
-from src.messages.errorMessages import (
+from src.messages.error_messages import (
     INVALID_SERVER_NAME_MSG,
     INVALID_SERVER_NAME_TITLE,
 )

@@ -1,7 +1,7 @@
 import pytest
 
-from src.exceptions.serverNameError import ServerNameError
-from src.gui.attempts.serverNameCheck import ServerNameCheck
+from exceptions.server_name_error import ServerNameError
+from gui.attempts.server_name_check import ServerNameCheck
 from tests import BaseTest
 
 

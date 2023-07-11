@@ -1,6 +1,6 @@
 from selenium import webdriver
 
-from src.webscrape.views.generalView import GeneralView
+from webscrape.views.general_view import GeneralView
 from tests import BaseTest
 
 

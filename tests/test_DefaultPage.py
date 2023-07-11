@@ -1,6 +1,6 @@
 from tkinter import BOTH, Frame
 
-from src.gui.pages.defaultPage import DefaultPage
+from gui.pages.default_page import DefaultPage
 from tests import BaseTest
 
 

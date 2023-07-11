@@ -1,4 +1,4 @@
-from src.webscrape.buildings.infraBuilding import InfraBuilding
+from webscrape.buildings.infra_building import InfraBuilding
 
 
 class Test_InfraBuilding:

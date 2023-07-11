@@ -1,8 +1,8 @@
 class Building:
-    def __init__(self, location, name, buildingId, level):
+    def __init__(self, location, name, building_id, level):
         self.__location = location
         self.__name = name
-        self.__buildingId = buildingId
+        self.__building_id = building_id
         self.__level = level
 
     @property
@@ -14,8 +14,8 @@ class Building:
         return self.__name
 
     @property
-    def buildingId(self):
-        return self.__buildingId
+    def building_id(self):
+        return self.__building_id
 
     @property
     def level(self):
@@ -23,4 +23,4 @@ class Building:
 
     def __str__(self):
         return f"Building(name = {self.name}, location = {self.location}, \
-buildingId = {self.buildingId}, level = {self.level})"
+buildingId = {self.building_id}, level = {self.level})"

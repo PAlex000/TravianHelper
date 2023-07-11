@@ -1,6 +1,6 @@
 from tests import BaseTest
 
-from src.gui.pages.serverPage import ServerPage
+from gui.pages.server_page import ServerPage
 
 
 class Test_ServerPage(BaseTest):

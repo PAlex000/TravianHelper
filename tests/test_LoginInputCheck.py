@@ -1,8 +1,8 @@
 import pytest
 
-from src.exceptions.EmailError import EmailError
-from src.exceptions.PasswordError import PasswordError
-from src.gui.attempts.loginInputCheck import LoginInputCheck
+from exceptions.email_error import EmailError
+from exceptions.password_error import PasswordError
+from gui.attempts.login_input_check import LoginInputCheck
 from tests import BaseTest
 
 
