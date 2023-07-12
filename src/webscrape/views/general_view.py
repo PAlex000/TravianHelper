@@ -34,7 +34,7 @@ class GeneralView:
         return self._location
 
     @property
-    def building_lame(self):
+    def building_name(self):
         return self._building_name
 
     @property

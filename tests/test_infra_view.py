@@ -1,11 +1,11 @@
-from webscrape.buildings.infra_building import InfraBuilding
+from src.webscrape.buildings.infra_building import InfraBuilding
 from src.webscrape.login import Login
-from webscrape.server_selection import ServerSelection
-from webscrape.views.infra_view import InfraView
+from src.webscrape.server_selection import ServerSelection
+from src.webscrape.views.infra_view import InfraView
 from tests import BaseTest
 
 
-class Test_InfraView(BaseTest):
+class TestInfraView(BaseTest):
     buildings = {
         "buildingId5": "Sawmill",
         "buildingId6": "Brickyard",
@@ -42,25 +42,25 @@ class Test_InfraView(BaseTest):
         "free_slot": "free_slot",
     }
 
-    def testGetAllFieldBuildings(self):
-        self._driverSetUp()
-        self._getCredentialsFromJSON()
+    def test_set_all_field_buildings(self):
+        self._driver_setup()
+        self._set_credentials_from_json()
 
         Login(self._email, self._password, 0, self._driver).login()
-        ServerSelection(self._driver).serverSelect()
+        ServerSelection(self._driver).server_select()
 
-        testInfraView = InfraView(self._driver)
-        testInfraView.getAllInfraBuildings()
+        test_infra_view = InfraView(self._driver)
+        test_infra_view.set_all_infra_buildings()
 
-        for field in testInfraView.fields:
-            if field.name not in Test_InfraView.buildings.values():
+        for field in test_infra_view.fields:
+            if field.name not in TestInfraView.buildings.values():
                 assert False
             if field.location != "free_slot":
-                locationId = int(field.location[-2] + field.location[-1])
-                if locationId < 18:
+                location_id = int(field.location[-2] + field.location[-1])
+                if location_id < 18:
                     assert False
 
-            if field.buildingId not in Test_InfraView.buildings.keys():
+            if field.building_id not in TestInfraView.buildings.keys():
                 assert False
 
             if int(field.level) > 20:
@@ -68,27 +68,27 @@ class Test_InfraView(BaseTest):
 
         assert True
 
-        self._driverQuit()
+        self._driver_quit()
 
-    def testInfraViewStrMethod(self):
-        self._driverSetUp()
-        testInfraView = InfraView(self._driver)
-        testInfraView._fieldSetter(
+    def test_infra_view_str_method(self):
+        self._driver_setup()
+        test_infra_view = InfraView(self._driver)
+        test_infra_view._field_setter(
             "buildingId5", "location19", "Sawmill", InfraBuilding, "1"
         )
-        testInfraView._fieldSetter(
+        test_infra_view._field_setter(
             "buildingId6", "location20", "Brickyard", InfraBuilding, "1"
         )
-        testInfraView._fieldSetter(
+        test_infra_view._field_setter(
             "buildingId7", "location21", "Iron Foundry", InfraBuilding, "1"
         )
-        testInfraView._fieldSetter(
+        test_infra_view._field_setter(
             "buildingId8", "location22", "Grain Mill", InfraBuilding, "1"
         )
 
-        formattedOutput = ""
-        for field in testInfraView.fields:
-            formattedOutput += f"{field}\n"
-        assert formattedOutput == f"{testInfraView}"
+        formatted_output = ""
+        for field in test_infra_view.fields:
+            formatted_output += f"{field}\n"
+        assert formatted_output == f"{test_infra_view}"
 
-        self._driverQuit()
+        self._driver_quit()
