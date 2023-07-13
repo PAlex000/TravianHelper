@@ -90,7 +90,8 @@ class Login:
             with open("credentials.json", "w", encoding="utf-8") as file:
                 file.write('{ "email" : "' + self.__email + '", "password" : "" }')
 
-    def get_credentials_from_json(self, file_path):
+    @classmethod
+    def get_credentials_from_json(cls, file_path):
         if os.path.exists(file_path):
             with open("./credentials.json", "r", encoding="utf-8") as file:
                 data = json.load(file)
