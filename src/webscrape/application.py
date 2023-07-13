@@ -1,7 +1,7 @@
 from src.gui.pages.login_page import LoginPage
+from src.gui.pages.general_page import GeneralPage
 from src.webscrape.driver import Driver
 from src.webscrape.login import Login
-from src.webscrape.views.village_view import Village
 from src.webscrape.server_selection import ServerSelection
 
 
@@ -13,7 +13,7 @@ class App:
         self.__configure_driver()
         self.__login()
         self.__server_selection()
-        self.__set_village_view()
+        self.__start_general_page()
 
     def __configure_driver(self):
         self.__configured_driver = Driver()
@@ -36,6 +36,5 @@ class App:
         selected_server = ServerSelection(self.__configured_driver.driver)
         selected_server.server_select()
 
-    def __set_village_view(self):
-        village = Village(self.__configured_driver.driver)
-        village.set_village()
+    def __start_general_page(self):
+        GeneralPage(self.__configured_driver.driver).mainloop()

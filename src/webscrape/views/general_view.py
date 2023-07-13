@@ -43,7 +43,7 @@ class GeneralView:
 
     def _get_main_view(self, location_id, village_view: str):
         self._set_building_id(location_id, village_view)
-        self._set_building_location()
+        self._set_building_location(location_id)
         self._set_building_name()
         self._set_building_level()
 
@@ -78,20 +78,18 @@ class GeneralView:
     def __does_building_exist(self):
         return self.__start_index != -1
 
-    def _set_building_location(self):
+    def _set_building_location(self, location_id):
         self.__set_start_index("location_")
         if self.__does_building_exist():
-            self._location = (
-                "location"
-                + self.__building_web_element.get_attribute("innerHTML")[
-                    self.__start_index
-                    + len("location_") : self.__start_index
-                    + len("location_")
-                    + 2
-                ]
-            )
+            self._location = self.__building_web_element.get_attribute("innerHTML")[
+                self.__start_index
+                + len("location_") : self.__start_index
+                + len("location_")
+                + 2
+            ]
+            self._location = int(self._location.replace('"', ""))
         else:
-            self._location = "free_slot"
+            self._location = int(location_id)
 
     def _set_building_name(self):
         if self.__does_building_exist():
@@ -112,3 +110,6 @@ class GeneralView:
 
     def _get_to_specific_view(self, view_name: str):
         self._wait.until(EC.element_to_be_clickable((By.CLASS_NAME, view_name))).click()
+
+    def get_fields(self):
+        return self._fields

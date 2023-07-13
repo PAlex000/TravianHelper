@@ -1,5 +1,6 @@
 import math
-from tkinter import Canvas, Frame, Label, Menu, Tk
+from tkinter import Button, Canvas, Frame, Label, Menu, Tk
+from src.webscrape.views.village_view import Village
 
 
 class MenuBar(Menu):
@@ -16,8 +17,9 @@ class MenuBar(Menu):
 
 # def __add_village_frame(self):
 class GeneralPage(Tk):
-    def __init__(self):
+    def __init__(self, driver):
         super().__init__()
+        self.__driver = driver
 
         self.title("General Page")
         self.geometry("1024x768")
@@ -29,6 +31,8 @@ class GeneralPage(Tk):
         self.__village_infra_view_frame = ""
         self.__field_canvas = ""
         self.__infra_canvas = ""
+        self.__field_ids = {}
+        self.__infra_ids = {}
 
         menu_bar = MenuBar(self)
         menu_bar._add_file_to_the_menubar()
@@ -46,8 +50,10 @@ class GeneralPage(Tk):
 
         self.__add_canvas_to_field_frame()
         self.__add_canvas_to_infra_frame()
-        draw_field_view(self.__field_canvas, 300, 150, 18)
-        draw_field_view(self.__infra_canvas, 300, 150, 20)
+        draw_field_view(self.__field_canvas, 300, 150, 18, field_ids=self.__field_ids)
+        draw_field_view(self.__infra_canvas, 300, 150, 22, infra_ids=self.__infra_ids)
+
+        self.__add_refresh_button()
 
     def __add_under_frame(self):
         self.__under_frame = Frame(
@@ -122,8 +128,23 @@ class GeneralPage(Tk):
         )
         self.__infra_canvas.pack()
 
+    def __add_refresh_button(self):
+        refresh_button = Button(
+            self.__under_frame,
+            text="Refresh all villages",
+            command=lambda: Village(self.__driver).set_village(
+                {
+                    "infra_canvas": self.__infra_canvas,
+                    "field_canvas": self.__field_canvas,
+                    "infra_ids": self.__infra_ids,
+                    "field_ids": self.__field_ids,
+                }
+            ),
+        )
+        refresh_button.pack(side="left")
 
-def draw_field_view(canvas, x, y, triangle_count):
+
+def draw_field_view(canvas, x, y, triangle_count, field_ids={}, infra_ids={}):
     angle = 360 / triangle_count
 
     for i in range(triangle_count):
@@ -140,4 +161,9 @@ def draw_field_view(canvas, x, y, triangle_count):
         canvas.create_oval(
             x_center - 10, y_center - 10, x_center + 10, y_center + 10, fill="white"
         )
-        canvas.create_text(x_center, y_center, text=str(i + 1))
+        id = canvas.create_text(x_center, y_center, text=str(0))
+        # Field view has 18 buildings but infra view has 20 (+2)
+        if triangle_count == 18:
+            field_ids[i + 1] = id
+        else:
+            infra_ids[i + 19] = id

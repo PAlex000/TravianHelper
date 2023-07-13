@@ -5,8 +5,12 @@ from src.webscrape.views.general_view import GeneralView
 
 
 class FieldView(GeneralView):
+    def __init__(self, driver):
+        super().__init__(driver)
+        self.__set_all_field_buildings()
+
     # Resource starts from 1 until 18
-    def set_all_field_buildings(self):
+    def __set_all_field_buildings(self):
         self._get_to_specific_view("navi_resources")
         time.sleep(5)
         for building_location in range(1, 19):
