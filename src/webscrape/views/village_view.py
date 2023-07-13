@@ -6,16 +6,21 @@ class Village:
     def __init__(self, driver):
         self.__driver = driver
 
-    def set_village(self):
-        self.__set_infra_view()
-        self.__set_field_view()
+    # Set the current village details to the gui
+    def set_village(self, canvas_and_ids):
+        self.__set_field_view(
+            canvas_and_ids["field_canvas"], canvas_and_ids["field_ids"]
+        )
+        self.__set_infra_view(
+            canvas_and_ids["infra_canvas"], canvas_and_ids["infra_ids"]
+        )
 
-    def __set_infra_view(self):
-        infra_view = InfraView(self.__driver)
-        infra_view.set_all_infra_buildings()
-        # print(f"{infraView}")
+    def __set_field_view(self, canvas, ids):
+        field_view = FieldView(self.__driver).get_fields()
+        for i in field_view:
+            canvas.itemconfig(ids[i.location], text=i.level)
 
-    def __set_field_view(self):
-        field_view = FieldView(self.__driver)
-        field_view.set_all_field_buildings()
-        # print(f"{fieldView}")
+    def __set_infra_view(self, canvas, ids):
+        infra_view = InfraView(self.__driver).get_fields()
+        for i in infra_view:
+            canvas.itemconfig(ids[i.location], text=i.level)
