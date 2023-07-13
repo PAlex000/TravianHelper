@@ -24,7 +24,7 @@ class LoginInputCheck:
     def save_email_btn(self):
         return self.__save_email_btn
 
-    def _check_details(self):
+    def check_details(self):
         self.__email_check()
         self.__password_check()
         return True
