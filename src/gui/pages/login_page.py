@@ -1,6 +1,5 @@
 from tkinter import END, Button, Checkbutton, Entry, IntVar
 
-from src.gui.attempts.login_input_check import LoginInputCheck
 from src.gui.pages.default_page import DefaultPage
 from src.webscrape.login import Login
 
@@ -75,7 +74,11 @@ class LoginPage(DefaultPage):
             self.frame,
             text="Login",
             command=lambda: Login.login_and_destroy_login_page(
-                self.__email_entry.get(),self.__password_entry.get(),self.__email_remember_button.get(), self.__driver, self
+                self.__email_entry.get(),
+                self.__password_entry.get(),
+                self.__email_remember_button.get(),
+                self.__driver,
+                self,
             ),
         )
         self.__login_button.pack(**self.properties)

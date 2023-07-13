@@ -1,7 +1,6 @@
 from src.gui.pages.login_page import LoginPage
 from src.gui.pages.general_page import GeneralPage
 from src.webscrape.driver import Driver
-from src.webscrape.login import Login
 from src.webscrape.server_selection import ServerSelection
 
 
