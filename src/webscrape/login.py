@@ -1,4 +1,6 @@
+import os
 import sys
+import json
 from tkinter import messagebox
 
 from selenium.common.exceptions import TimeoutException
@@ -13,8 +15,8 @@ class Login:
     def __init__(self, email, password, save_email, driver):
         self.__email = email
         self.__password = password
-        self.__save_email_btn = save_email
         self.__driver = driver
+        self.__save_email_button = save_email
         self.__wait = WebDriverWait(self.__driver, 10)
         self.__email_field = ""
         self.__password_field = ""
@@ -27,8 +29,11 @@ class Login:
     def password(self):
         return self.__password
 
+    @property
+    def save_email_button(self):
+        return self.__save_email_button
+
     def login(self):
-        # self.__save_email()
         self.__load_page()
         self.__click_cookie_and_login_buttons()
         self.__switch_iframes()
@@ -36,6 +41,7 @@ class Login:
         self.__set_login_credentials()
         self.__click_login()
         self.__check_login()
+        self.__save_email()
 
     def __load_page(self):
         self.__driver.get("https://www.kingdoms.com/")
@@ -78,3 +84,16 @@ class Login:
         except TimeoutException:
             messagebox.showerror(FAILED_LOGIN_TITLE, FAILED_LOGIN_MSG)
             sys.exit()
+
+    def __save_email(self):
+        if self.__save_email_button:
+            with open("credentials.json", "w", encoding="utf-8") as file:
+                file.write('{ "email" : "' + self.__email + '", "password" : "" }')
+
+    def get_credentials_from_json(self, file_path):
+        if os.path.exists(file_path):
+            with open("./credentials.json", "r", encoding="utf-8") as file:
+                data = json.load(file)
+                return {"email": data["email"], "password": data["password"]}
+        else:
+            return {"email": "email", "password": "password"}

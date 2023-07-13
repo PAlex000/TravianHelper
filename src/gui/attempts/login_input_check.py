@@ -7,10 +7,10 @@ from src.exceptions.password_error import PasswordError
 class LoginInputCheck:
     regex_for_email = r"\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b"
 
-    def __init__(self, email, password, save_email_btn):
+    def __init__(self, email, password, save_email):
         self.__email = email
         self.__password = password
-        self.__save_email_btn = save_email_btn
+        self.__save_email_btn = save_email
 
     @property
     def email(self):
