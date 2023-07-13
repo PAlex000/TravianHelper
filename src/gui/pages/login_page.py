@@ -2,6 +2,7 @@ from tkinter import END, Button, Checkbutton, Entry, IntVar
 
 from src.gui.attempts.login_input_check import LoginInputCheck
 from src.gui.pages.default_page import DefaultPage
+from src.webscrape.login import Login
 
 
 class LoginPage(DefaultPage):
@@ -55,11 +56,13 @@ class LoginPage(DefaultPage):
         self.__create_buttons()
 
     def __create_entries(self):
+        email, password = Login.get_credentials_from_json("credentials.json").values()
         self.__email_entry = Entry(self.frame)
-        self.__email_entry.insert(0, "Email")
+        self.__email_entry.insert(0, email)
         self.__email_entry.pack(**self.properties)
         self.__password_entry = Entry(self.frame)
         self.__password_entry.config(show="*")
+        self.__password_entry.insert(0, password)
         self.__password_entry.pack(**self.properties)
 
     def __create_buttons(self):
