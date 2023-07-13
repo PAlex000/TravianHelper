@@ -6,16 +6,14 @@ from src.webscrape.login import Login
 
 
 class LoginPage(DefaultPage):
-    def __init__(
-        self,
-        title="Login Credentials",
-    ):
+    def __init__(self, driver, title="Login Credentials"):
         super().__init__(title)
         self.__login_credentials = {"email": "", "password": "", "saveEmail": ""}
         self.__email_entry = Entry()
         self.__password_entry = Entry()
         self.__login_button = Button()
         self.__email_remember_button = IntVar()
+        self.__driver = driver
 
     @property
     def login_credentials(self):
@@ -76,23 +74,11 @@ class LoginPage(DefaultPage):
         self.__login_button = Button(
             self.frame,
             text="Login",
-            command=lambda: self.__login_and_destroy_login_page(
-                self.__email_remember_button
+            command=lambda: Login.login_and_destroy_login_page(
+                self.__email_entry.get(),self.__password_entry.get(),self.__email_remember_button.get(), self.__driver, self
             ),
         )
         self.__login_button.pack(**self.properties)
 
-    def __login_and_destroy_login_page(self, email_remember_button):
-        attempt = LoginInputCheck(
-            self.__email_entry.get(),
-            self.__password_entry.get(),
-            email_remember_button.get(),
-        )
-        self.__login_credentials = attempt.get_login_credentials()
-        self.__destroy__login_page()
-
     def start_main_loop(self):
         self.mainloop()
-
-    def __destroy__login_page(self):
-        self.destroy()

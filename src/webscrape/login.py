@@ -9,7 +9,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
 from src.messages.error_messages import FAILED_LOGIN_MSG, FAILED_LOGIN_TITLE
-
+from src.gui.attempts.login_input_check import LoginInputCheck
 
 class Login:
     def __init__(self, email, password, save_email, driver):
@@ -98,3 +98,10 @@ class Login:
                 return {"email": data["email"], "password": data["password"]}
         else:
             return {"email": "email", "password": "password"}
+
+    @classmethod
+    def login_and_destroy_login_page(cls,email, password, save_email, driver, login_page):
+        check = LoginInputCheck(email, password, save_email)._check_details()
+        if check:
+            login_page.destroy()
+            Login(email, password, save_email, driver).login()

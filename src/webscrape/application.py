@@ -20,17 +20,9 @@ class App:
         self.__configured_driver.configure_driver()
 
     def __login(self):
-        attempt = LoginPage()
+        attempt = LoginPage(self.__configured_driver.driver)
         attempt.create_login_page()
         attempt.start_main_loop()
-        login_credentials = attempt.login_credentials
-
-        Login(
-            login_credentials["email"],
-            login_credentials["password"],
-            login_credentials["saveEmail"],
-            self.__configured_driver.driver,
-        ).login()
 
     def __server_selection(self):
         selected_server = ServerSelection(self.__configured_driver.driver)

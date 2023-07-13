@@ -24,14 +24,10 @@ class LoginInputCheck:
     def save_email_btn(self):
         return self.__save_email_btn
 
-    def get_login_credentials(self):
+    def _check_details(self):
         self.__email_check()
         self.__password_check()
-        return {
-            "email": self.__email,
-            "password": self.__password,
-            "saveEmail": self.__save_email_btn,
-        }
+        return True
 
     def __email_check(self):
         if not self.__is_email_matched():
