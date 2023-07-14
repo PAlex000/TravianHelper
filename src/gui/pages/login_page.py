@@ -5,7 +5,7 @@ from src.webscrape.login import Login
 
 
 class LoginPage(DefaultPage):
-    def __init__(self, driver, title="Login Credentials"):
+    def __init__(self, driver = "", title="Login Credentials"):
         super().__init__(title)
         self.__login_credentials = {"email": "", "password": "", "saveEmail": ""}
         self.__email_entry = Entry()
