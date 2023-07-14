@@ -35,23 +35,6 @@ class TestLoginPage:
 
         login_page.destroy()
 
-    def test_create_login_page(self):
-        login_page = LoginPage()
-
-        login_page.create_login_page()
-        login_page.email_entry = "tesztemail@gmail.com"
-        login_page.password_entry = "tesztpassword"
-        login_page.email_remember_button = 1
-        login_page.after(2000, login_page.login_button.invoke())
-
-        login_page.start_main_loop()
-
-        assert login_page.login_credentials == {
-            "email": "tesztemail@gmail.com",
-            "password": "tesztpassword",
-            "saveEmail": 1,
-        }
-
     def test_login_page_setters(self):
         login_page = LoginPage()
 

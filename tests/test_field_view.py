@@ -27,10 +27,8 @@ class TestFieldView(BaseTest):
             if field.name not in TestFieldView.buildings.values():
                 assert False
             # It's a bug, will be fixed later, location gets location1", location2"... until 9, because then it gets location10
-            if field.location[-1] != '"':
-                location_id = int(field.location[-2] + field.location[-1])
-                if location_id > 18:
-                    assert False
+            if field.location > 18:
+                assert False
 
             if field.building_id not in TestFieldView.buildings.keys():
                 assert False
@@ -38,6 +36,8 @@ class TestFieldView(BaseTest):
             if int(field.level) > 20:
                 assert False
 
+        for i in test_field_view.fields:
+            print(i)
         assert len(test_field_view.fields) == 18
 
         self._driver_quit()

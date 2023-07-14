@@ -56,8 +56,7 @@ class TestInfraView(BaseTest):
             if field.name not in TestInfraView.buildings.values():
                 assert False
             if field.location != "free_slot":
-                location_id = int(field.location[-2] + field.location[-1])
-                if location_id < 18:
+                if field.location < 18:
                     assert False
 
             if field.building_id not in TestInfraView.buildings.keys():
