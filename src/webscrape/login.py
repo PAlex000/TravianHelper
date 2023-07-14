@@ -2,6 +2,7 @@ import os
 import sys
 import json
 from tkinter import messagebox
+import time
 
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
@@ -62,6 +63,7 @@ class Login:
         )
 
     def __set_login_fields(self):
+        time.sleep(3)
         self.__email_field = self.__wait.until(
             EC.visibility_of_element_located((By.NAME, "email"))
         )
