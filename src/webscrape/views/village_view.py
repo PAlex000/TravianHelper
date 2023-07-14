@@ -16,11 +16,15 @@ class Village:
         )
 
     def __set_field_view(self, canvas, ids):
-        field_view = FieldView(self.__driver).get_fields()
+        field_view = FieldView(self.__driver)
+        field_view.set_all_field_buildings()
+        field_view = field_view.get_fields()
         for i in field_view:
             canvas.itemconfig(ids[i.location], text=i.level)
 
     def __set_infra_view(self, canvas, ids):
-        infra_view = InfraView(self.__driver).get_fields()
+        infra_view = InfraView(self.__driver)
+        infra_view.set_all_infra_buildings()
+        infra_view = infra_view.get_fields()
         for i in infra_view:
             canvas.itemconfig(ids[i.location], text=i.level)
