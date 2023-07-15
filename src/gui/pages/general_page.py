@@ -1,5 +1,8 @@
 import math
 from tkinter import Button, Canvas, Frame, Label, Menu, Tk
+
+from selenium.webdriver.common.by import By
+
 from src.webscrape.views.village_view import Village
 
 
@@ -15,7 +18,6 @@ class MenuBar(Menu):
         self.add_cascade(label="File", menu=file)
 
 
-# def __add_village_frame(self):
 class GeneralPage(Tk):
     def __init__(self, driver):
         super().__init__()
@@ -110,8 +112,28 @@ class GeneralPage(Tk):
         self.__village_infra_view_frame.pack(side="left", anchor="n")
         self.__village_infra_view_frame.pack_propagate(False)
 
-    def __add_village_names_to_frame(self):
-        Label(self.__village_name_frame, text="village1").pack(side="left", anchor="n")
+    def __add_village_names_to_frame(self, village_name="Unknown village"):
+        if village_name != "Unknown village":
+            Label(
+                self.__village_name_frame,
+                text=village_name,
+                width=30,
+                height=3,
+                relief="raised",
+                bg="grey",
+                cursor="hand2",
+            ).pack()
+            # label.bind("<Button-1>", lambda event: self.say_something("Hi"))
+        else:
+            label = Label(
+                self.__village_name_frame,
+                text="Unknown village",
+                width=30,
+                height=3,
+                bg="grey",
+                cursor="hand2",
+            )
+            label.pack()
 
     def __add_tasks_to_frame(self):
         Label(self.__task_view_frame, text="Task1").pack(side="left", anchor="n")
@@ -132,16 +154,35 @@ class GeneralPage(Tk):
         refresh_button = Button(
             self.__under_frame,
             text="Refresh all villages",
-            command=lambda: Village(self.__driver).set_village(
+            command=lambda: self.__refresh_everything(
                 {
                     "infra_canvas": self.__infra_canvas,
                     "field_canvas": self.__field_canvas,
                     "infra_ids": self.__infra_ids,
                     "field_ids": self.__field_ids,
-                }
+                },
             ),
         )
         refresh_button.pack(side="left")
+
+    def __refresh_everything(self, ids):
+        village_names = self.__get_village_names_from_html()
+        self.__destroy_frame_widgets(self.__village_name_frame)
+        self.__set_village_names(village_names)
+        Village(self.__driver).set_village(ids)
+
+    def __get_village_names_from_html(self):
+        # It has several scroll_content, we need the last one
+        scroll_content = self.__driver.find_elements(By.CLASS_NAME, "scrollContent")[-1]
+        return scroll_content.find_elements(By.CLASS_NAME, "villageEntry")
+
+    def __destroy_frame_widgets(self, frame):
+        for widget in frame.winfo_children():
+            widget.destroy()
+
+    def __set_village_names(self, names):
+        for name in names:
+            self.__add_village_names_to_frame(name.get_attribute("innerHTML"))
 
 
 def draw_field_view(canvas, x, y, triangle_count, field_ids={}, infra_ids={}):

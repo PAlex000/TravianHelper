@@ -7,6 +7,11 @@ from src.webscrape.server_selection import ServerSelection
 class App:
     def __init__(self):
         self.__configured_driver = ""
+        self.__general_page = ""
+
+    @property
+    def general_page(self):
+        return self.__general_page
 
     def run(self):
         self.__configure_driver()
