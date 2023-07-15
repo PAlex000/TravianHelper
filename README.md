@@ -15,7 +15,7 @@ I am trying to improve python and webscraping, so I decided to write it in pytho
 
 ### Requirements:
 
- - Python
+ - Python 3.8.0+
  - Modules in requirements.txt (Might be too much, will check it later)
  - Microsoft Edge browser
 
