@@ -9,7 +9,7 @@ class TestFieldBuilding:
         level = 10
         building = FieldBuilding(location, name, building_id, level)
         assert (
-            f"FieldBuilding(name = {building.name}, location = {building.location}, \
+            f"FieldBuilding(name = {building.building_name}, location = {building.location}, \
 buildingId = {building.building_id}, level = {building.level})"
             == f"{building}"
         )

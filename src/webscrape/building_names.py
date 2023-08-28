@@ -25,7 +25,7 @@ building_names = {
     "buildingId24": "Town Hall",
     "buildingId25": "Residence",
     "buildingId26": "Palace",
-    "buildingId27": "Unknown Building",
+    "buildingId27": "Treasury",
     "buildingId28": "Trade Office",
     "buildingId29": "Unknown Building",
     "buildingId30": "Unknown Building",

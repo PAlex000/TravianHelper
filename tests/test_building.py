@@ -22,7 +22,7 @@ class TestBuilding:
         level = 10
         building = Building(location, name, building_id, level)
         assert (
-            f"Building(name = {building.name}, location = {building.location}, \
+            f"Building(name = {building.building_name}, location = {building.location}, \
 buildingId = {building.building_id}, level = {building.level})"
             == f"{building}"
         )

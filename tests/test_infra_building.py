@@ -9,6 +9,6 @@ class TestInfraBuilding:
         level = 10
         building = InfraBuilding(location, name, building_id, level)
         assert (
-            f"InfraBuilding(name = {building.name}, location = {building.location}, buildingId = {building.building_id}, level = {building.level})"
+            f"InfraBuilding(name = {building.building_name}, location = {building.location}, buildingId = {building.building_id}, level = {building.level})"
             == f"{building}"
         )

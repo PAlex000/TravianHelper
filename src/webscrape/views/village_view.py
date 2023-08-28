@@ -19,12 +19,16 @@ class Village:
         field_view = FieldView(self.__driver)
         field_view.set_all_field_buildings()
         field_view = field_view.get_fields()
-        for i in field_view:
-            canvas.itemconfig(ids[i.location], text=i.level)
+        for building in field_view:
+            ids[building.location].config(
+                text=f"{building.building_name} : Level {building.level}"
+            )
 
     def __set_infra_view(self, canvas, ids):
         infra_view = InfraView(self.__driver)
         infra_view.set_all_infra_buildings()
         infra_view = infra_view.get_fields()
-        for i in infra_view:
-            canvas.itemconfig(ids[i.location], text=i.level)
+        for building in infra_view:
+            ids[building.location].config(
+                text=f"{building.building_name} : Level {building.level}"
+            )

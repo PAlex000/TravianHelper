@@ -22,7 +22,6 @@ class GeneralPage(Tk):
     def __init__(self, driver):
         super().__init__()
         self.__driver = driver
-
         self.title("General Page")
         self.geometry("1024x768")
 
@@ -52,8 +51,8 @@ class GeneralPage(Tk):
 
         self.__add_canvas_to_field_frame()
         self.__add_canvas_to_infra_frame()
-        draw_field_view(self.__field_canvas, 300, 150, 18, field_ids=self.__field_ids)
-        draw_field_view(self.__infra_canvas, 300, 150, 22, infra_ids=self.__infra_ids)
+        self.__create_labels_for_fields()
+        self.__create_labels_for_infra()
 
         self.__add_refresh_button()
 
@@ -94,18 +93,18 @@ class GeneralPage(Tk):
         self.__village_field_view_frame = Frame(
             self,
             width=600,
-            height=300,
+            height=260,
             highlightbackground="black",
             highlightthickness=1,
         )
         self.__village_field_view_frame.pack(side="top", anchor="w")
-        self.__village_field_view_frame.pack_propagate(False)
+        self.__village_field_view_frame.pack_propagate(0)
 
     def __add_village_infra_view_frame(self):
         self.__village_infra_view_frame = Frame(
             self,
             width=600,
-            height=300,
+            height=340,
             highlightbackground="black",
             highlightthickness=1,
         )
@@ -113,27 +112,16 @@ class GeneralPage(Tk):
         self.__village_infra_view_frame.pack_propagate(False)
 
     def __add_village_names_to_frame(self, village_name="Unknown village"):
-        if village_name != "Unknown village":
-            Label(
-                self.__village_name_frame,
-                text=village_name,
-                width=30,
-                height=3,
-                relief="raised",
-                bg="grey",
-                cursor="hand2",
-            ).pack()
-            # label.bind("<Button-1>", lambda event: self.say_something("Hi"))
-        else:
-            label = Label(
-                self.__village_name_frame,
-                text="Unknown village",
-                width=30,
-                height=3,
-                bg="grey",
-                cursor="hand2",
-            )
-            label.pack()
+        Label(
+            self.__village_name_frame,
+            text=village_name,
+            width=30,
+            height=2,
+            relief="raised",
+            bg="grey",
+            cursor="hand2",
+        ).pack()
+        # label.bind("<Button-1>", lambda event: self.say_something("Hi"))
 
     def __add_tasks_to_frame(self):
         Label(self.__task_view_frame, text="Task1").pack(side="left", anchor="n")
@@ -184,27 +172,30 @@ class GeneralPage(Tk):
         for name in names:
             self.__add_village_names_to_frame(name.get_attribute("innerHTML"))
 
+    def __create_labels_for_fields(self, names=[]):
+        for i in range(18):
+            id = Label(
+                self.__field_canvas,
+                text=f"Unknown field{i + 1}",
+                width=28,
+                height=2,
+                relief="raised",
+                bg="grey",
+                cursor="hand2",
+            )
+            id.grid(row=i % 6, column=int(i / 6))
+            self.__field_ids[i + 1] = id
 
-def draw_field_view(canvas, x, y, triangle_count, field_ids={}, infra_ids={}):
-    angle = 360 / triangle_count
-
-    for i in range(triangle_count):
-        x1 = x + 150 * math.cos(math.radians(angle * i))
-        y1 = y + 150 * math.sin(math.radians(angle * i))
-        x2 = x + 150 * math.cos(math.radians(angle * (i + 1)))
-        y2 = y + 150 * math.sin(math.radians(angle * (i + 1)))
-        x3 = x
-        y3 = y
-
-        canvas.create_polygon(x1, y1, x2, y2, x3, y3, outline="black", fill="")
-        x_center = (x1 + x2 + x3) / 3
-        y_center = (y1 + y2 + y3) / 3
-        canvas.create_oval(
-            x_center - 10, y_center - 10, x_center + 10, y_center + 10, fill="white"
-        )
-        id = canvas.create_text(x_center, y_center, text=str(0))
-        # Field view has 18 buildings but infra view has 20 (+2)
-        if triangle_count == 18:
-            field_ids[i + 1] = id
-        else:
-            infra_ids[i + 19] = id
+    def __create_labels_for_infra(self, names=[]):
+        for i in range(25):
+            id = Label(
+                self.__infra_canvas,
+                text=f"Unknown building{i + 1}",
+                width=28,
+                height=2,
+                relief="raised",
+                bg="grey",
+                cursor="hand2",
+            )
+            id.grid(row=i % 9, column=int(i / 9))
+            self.__infra_ids[i + 19] = id
